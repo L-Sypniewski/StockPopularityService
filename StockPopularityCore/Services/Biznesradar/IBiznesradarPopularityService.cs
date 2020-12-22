@@ -5,6 +5,6 @@ namespace StockPopularityCore.Services.Biznesradar
 {
     public interface IBiznesradarPopularityService
     {
-        IReadOnlyCollection<IStockPopularity> StocksPopularity();
+        IAsyncEnumerable<IStockPopularity> StocksPopularity();
     }
 }
