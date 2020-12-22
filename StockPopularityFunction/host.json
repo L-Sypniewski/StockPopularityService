@@ -1,6 +1,9 @@
 {
     "version": "2.0",
     "logging": {
+      "logLevel": {
+        "StockPopularityCore": "Information"
+      },
         "applicationInsights": {
             "samplingExcludedTypes": "Request",
             "samplingSettings": {
