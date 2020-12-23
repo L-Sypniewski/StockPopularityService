@@ -1,10 +1,11 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using StockPopularityCore.Model;
 
 namespace StockPopularityCore.Services.Biznesradar
 {
     public interface IBiznesradarPopularityService
     {
-        IAsyncEnumerable<IStockPopularity> StocksPopularity();
+        public Task<StocksPopularity<StockPopularityItem>> FetchStocksPopularity();
     }
 }

@@ -2,18 +2,16 @@ using System;
 
 namespace StockPopularityCore.Model
 {
-    public struct StockPopularity: IStockPopularity
+    public readonly struct StockPopularityItem : IStockPopularityItem
     {
         public string StockName { get; }
         public int Rank { get; }
-        public DateTimeOffset Date { get; }
 
 
-        public StockPopularity(string stockName, int rank, DateTimeOffset date)
+        public StockPopularityItem(string stockName, int rank)
         {
             StockName = stockName;
             Rank = rank;
-            Date = date;
         }
     }
 }

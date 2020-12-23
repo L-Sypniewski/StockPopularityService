@@ -23,10 +23,11 @@ namespace StockPopularityFunction
 
 
         [FunctionName("CheckStockPopularitiesTrigger")]
-        public async Task RunAsync([TimerTrigger("*/40 * * * * *")] TimerInfo myTimer, ILogger log)
+        public async Task RunAsync([TimerTrigger("*/10 * * * * *")] TimerInfo myTimer, ILogger log)
         {
             log.LogInformation($"CheckStockPopularitiesTrigger executed at: {DateTime.UtcNow}");
-            var page = await _biznesradarPopularityService.StocksPopularity().ToArrayAsync();
+            var stocksPopularity = await _biznesradarPopularityService.FetchStocksPopularity();
+            int i = 2;
         }
     }
 }

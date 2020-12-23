@@ -15,6 +15,7 @@ namespace StockPopularityFunction
         {
             builder.Services.AddHttpClient<IBiznesradarPopularityService, BiznesradarPopularityService>();
             builder.Services.AddSingleton<IHtmlDocumentReader, HtmlDocumentReader>();
+            builder.Services.AddSingleton<IDateProvider, DateProvider>();
         }
 
 
