@@ -42,7 +42,7 @@ namespace StockPopularityCore.Services.Biznesradar
                 _logger.LogInformation("Fetched table elements from page source");
 
                 var stocksPopularityItems = tableElements.Select(PopularityDataFrom)
-                                                         .Select(tuple => new StockPopularityItem(tuple.stockName, tuple.rank));
+                                                         .Select(tuple => new StockPopularityItem(tuple.stockName, tuple.rank)).ToArray();
 
                 _logger.LogInformation("Created stock popularity items");
 
@@ -76,15 +76,14 @@ namespace StockPopularityCore.Services.Biznesradar
 
         private static (int rank, string stockName) PopularityDataFrom(string rowString)
         {
-            var stringElements = Regex.Replace(rowString, @"\s+", " ");
-            var split = stringElements.Split(' ').Where(x => x != "").ToArray();
-            var stockNameContainsTwoCodeNames = split.Length == 9;
+            var stringElements = rowString.Split(" ").Where(x => x != "").ToArray();
+            var stockNameContainsTwoCodeNames = stringElements.Length == 11;
 
-            var rank = int.Parse(split.First());
+            var rank = int.Parse(stringElements.First());
 
             var stockName = stockNameContainsTwoCodeNames
-                ? $"{split[1]} {split[2]}"
-                : split[1];
+                ? $"{stringElements[1]} {stringElements[2]}"
+                : stringElements[1];
 
             return ( rank, stockName );
         }

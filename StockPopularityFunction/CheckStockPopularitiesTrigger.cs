@@ -26,7 +26,7 @@ namespace StockPopularityFunction
         public async Task RunAsync([TimerTrigger("*/10 * * * * *")] TimerInfo myTimer, ILogger log)
         {
             log.LogInformation($"CheckStockPopularitiesTrigger executed at: {DateTime.UtcNow}");
-            var stocksPopularity = await _biznesradarPopularityService.FetchStocksPopularity();
+            var stocksPopularity = _biznesradarPopularityService.FetchStocksPopularity().Result;
             int i = 2;
         }
     }
