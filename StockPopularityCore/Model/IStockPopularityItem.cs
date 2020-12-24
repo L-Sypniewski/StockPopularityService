@@ -4,7 +4,7 @@ namespace StockPopularityCore.Model
 {
     public interface IStockPopularityItem
     {
-        public string StockName { get; }
+        public StockName StockName { get; }
         public int Rank { get; }
     }
 }

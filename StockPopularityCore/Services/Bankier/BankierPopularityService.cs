@@ -45,7 +45,7 @@ namespace StockPopularityCore.Services.Bankier
                                                          .Select(tuple => new BankierStockPopularityItem(
                                                                      tuple.stockName, tuple.rank, tuple.last30DaysPostsCount));
 
-                _logger.LogInformation("Created stock popularity items");
+                _logger.LogInformation("Created stock popularity items from Bankier.pl data");
 
                 return new StocksPopularity<BankierStockPopularityItem>(stocksPopularityItems, currentDate);
             }
@@ -76,16 +76,18 @@ namespace StockPopularityCore.Services.Bankier
         }
 
 
-        private static (int rank, string stockName, int last30DaysPostsCount) PopularityDataFrom(string rowString)
+        private static (int rank, StockName stockName, int last30DaysPostsCount) PopularityDataFrom(string rowString)
         {
             var stringElements = rowString.Split(" ").Where(x => x != "").ToArray();
 
             var rank = int.Parse(stringElements.First());
-            var longName = stringElements[1];
-            var codename = stringElements[2];
+            var stockName = StockNameFrom(stringElements);
             var last30DaysPostsCount = int.Parse(stringElements[3]);
-
-            return ( rank, $"{longName} ({codename})", last30DaysPostsCount );
+            return ( rank, stockName, last30DaysPostsCount );
         }
+
+
+        private static StockName StockNameFrom(string[] rowStringElements) =>
+            new StockName(rowStringElements[1], rowStringElements[2]);
     }
 }

@@ -44,7 +44,7 @@ namespace StockPopularityCore.Services.Biznesradar
                 var stocksPopularityItems = tableElements.Select(PopularityDataFrom)
                                                          .Select(tuple => new StockPopularityItem(tuple.stockName, tuple.rank));
 
-                _logger.LogInformation("Created stock popularity items");
+                _logger.LogInformation("Created stock popularity items from Biznesradar data");
 
                 return new StocksPopularity<StockPopularityItem>(stocksPopularityItems, currentDate);
             }
@@ -74,18 +74,25 @@ namespace StockPopularityCore.Services.Biznesradar
         }
 
 
-        private static (int rank, string stockName) PopularityDataFrom(string rowString)
+        private static (int rank, StockName stockName) PopularityDataFrom(string rowString)
         {
             var stringElements = rowString.Split(" ").Where(x => x != "").ToArray();
-            var stockNameContainsTwoCodeNames = stringElements.Length == 11;
 
             var rank = int.Parse(stringElements.First());
-
-            var stockName = stockNameContainsTwoCodeNames
-                ? $"{stringElements[1]} {stringElements[2]}"
-                : stringElements[1];
+            var stockName = StockNameFrom(stringElements);
 
             return ( rank, stockName );
+        }
+
+
+        private static StockName StockNameFrom(string[] rowStringElements)
+        {
+            var stockNameContainsTwoCodeNames = rowStringElements.Length == 11;
+            var codename = rowStringElements[1];
+            var longName = stockNameContainsTwoCodeNames
+                ? rowStringElements[2].WithoutFirstAndLastCharacter()
+                : null;
+            return new StockName(longName, codename);
         }
     }
 }
