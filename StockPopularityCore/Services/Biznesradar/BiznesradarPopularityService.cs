@@ -42,7 +42,7 @@ namespace StockPopularityCore.Services.Biznesradar
                 _logger.LogInformation("Fetched table elements from page source");
 
                 var stocksPopularityItems = tableElements.Select(PopularityDataFrom)
-                                                         .Select(tuple => new StockPopularityItem(tuple.stockName, tuple.rank)).ToArray();
+                                                         .Select(tuple => new StockPopularityItem(tuple.stockName, tuple.rank));
 
                 _logger.LogInformation("Created stock popularity items");
 
