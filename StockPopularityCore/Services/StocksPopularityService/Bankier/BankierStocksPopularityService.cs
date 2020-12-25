@@ -6,10 +6,11 @@ using StockPopularityCore.Utils;
 
 namespace StockPopularityCore.Services.StocksPopularityService
 {
-    public class BankierStocksPopularityService : AbstractStocksPopularityService<BankierStockPopularityItem>, IBankierPopularityService
+    public class BankierStocksPopularityService : AbstractStocksPopularityService<BankierStockPopularityItem>,
+        IBankierPopularityService
     {
         public BankierStocksPopularityService(HttpClient httpClient, IDateProvider dateProvider,
-                                        ILogger<BankierStocksPopularityService> logger)
+                                              ILogger<BankierStocksPopularityService> logger)
             : base(httpClient, dateProvider, logger)
         {
         }

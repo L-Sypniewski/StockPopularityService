@@ -25,7 +25,7 @@ namespace StockPopularityCore.Services.StocksPopularityService
 
 
         protected AbstractStocksPopularityService(HttpClient httpClient, IDateProvider dateProvider,
-                                            ILogger<AbstractStocksPopularityService<TStockPopularityItem>> logger)
+                                                  ILogger<AbstractStocksPopularityService<TStockPopularityItem>> logger)
         {
             _httpClient = httpClient;
             _dateProvider = dateProvider;

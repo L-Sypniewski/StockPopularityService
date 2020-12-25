@@ -1,5 +1,3 @@
-using System;
-
 namespace StockPopularityCore.Model
 {
     public readonly struct StockPopularityItem : IStockPopularityItem

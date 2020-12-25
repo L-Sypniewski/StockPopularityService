@@ -1,5 +1,3 @@
-using System;
-
 namespace StockPopularityCore.Model
 {
     public interface IStockPopularityItem
