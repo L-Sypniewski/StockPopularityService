@@ -2,14 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
 using Microsoft.Extensions.Logging;
 using StockPopularityCore.Model;
 using StockPopularityCore.Utils;
 
-namespace StockPopularityCore.Services.Biznesradar
+namespace StockPopularityCore.Services.PopularityService
 {
     public class BiznesradarPopularityService : IBiznesradarPopularityService
     {

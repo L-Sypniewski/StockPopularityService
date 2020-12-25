@@ -2,8 +2,7 @@ using System;
 using Microsoft.Extensions.Logging;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
-using StockPopularityCore.Services.Bankier;
-using StockPopularityCore.Services.Biznesradar;
+using StockPopularityCore.Services.PopularityService;
 using StockPopularityCore.Utils;
 
 [assembly: FunctionsStartup(typeof(StockPopularityFunction.Startup))]
