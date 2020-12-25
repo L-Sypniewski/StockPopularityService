@@ -55,7 +55,7 @@ namespace StockPopularityCore.Services.StocksPopularityService
             {
                 _logger.LogError(
                     "An exception has been throw when fetching stocks popularity from {websiteName}. Exception message: {message}",
-                    WebsiteDisplayName, exception.Message);
+                    WebsiteDisplayName, exception);
                 throw;
             }
         }

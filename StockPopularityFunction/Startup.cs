@@ -14,7 +14,7 @@ namespace StockPopularityFunction
         public override void Configure(IFunctionsHostBuilder builder)
         {
             builder.Services.AddHttpClient<IBiznesradarPopularityService, BiznesradarStockPopularityService>();
-            builder.Services.AddHttpClient<IBankierPopularityService, BankierStockPopularityService>();
+            builder.Services.AddHttpClient<IBankierPopularityService, BankierPopularityService>();
             builder.Services.AddSingleton<IHtmlDocumentReader, HtmlDocumentReader>();
             builder.Services.AddSingleton<IDateProvider, DateProvider>();
         }
