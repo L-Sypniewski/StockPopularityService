@@ -10,12 +10,12 @@ using StockPopularityCore.Utils;
 
 namespace StockPopularityCore.Services.StocksPopularityService
 {
-    public abstract class AbstractStocksPopularityService<TStockPopularityItem> : IStocksPopularityService<TStockPopularityItem>
+    public abstract class AbstractStockPopularityService<TStockPopularityItem> : IStockPopularityService<TStockPopularityItem>
         where TStockPopularityItem : IStockPopularityItem
     {
         private readonly HttpClient _httpClient;
         private readonly IDateProvider _dateProvider;
-        private readonly ILogger<AbstractStocksPopularityService<TStockPopularityItem>> _logger;
+        private readonly ILogger<AbstractStockPopularityService<TStockPopularityItem>> _logger;
         private readonly HtmlDocumentReader _documentReader;
 
         protected abstract string Uri { get; }
@@ -24,8 +24,8 @@ namespace StockPopularityCore.Services.StocksPopularityService
         protected abstract string WebsiteDisplayName { get; }
 
 
-        protected AbstractStocksPopularityService(HttpClient httpClient, IDateProvider dateProvider,
-                                                  ILogger<AbstractStocksPopularityService<TStockPopularityItem>> logger)
+        protected AbstractStockPopularityService(HttpClient httpClient, IDateProvider dateProvider,
+                                                  ILogger<AbstractStockPopularityService<TStockPopularityItem>> logger)
         {
             _httpClient = httpClient;
             _dateProvider = dateProvider;
@@ -34,7 +34,7 @@ namespace StockPopularityCore.Services.StocksPopularityService
         }
 
 
-        public async Task<StocksPopularity<TStockPopularityItem>> FetchStocksPopularity()
+        public async Task<StockPopularity<TStockPopularityItem>> FetchStockPopularity()
         {
             try
             {
@@ -49,7 +49,7 @@ namespace StockPopularityCore.Services.StocksPopularityService
 
                 _logger.LogInformation("Created stock popularity items from {websiteName} data", WebsiteDisplayName);
 
-                return new StocksPopularity<TStockPopularityItem>(stocksPopularityItems, currentDate);
+                return new StockPopularity<TStockPopularityItem>(stocksPopularityItems, currentDate);
             }
             catch (Exception exception)
             {

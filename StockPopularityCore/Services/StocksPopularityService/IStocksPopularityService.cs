@@ -3,8 +3,8 @@ using StockPopularityCore.Model;
 
 namespace StockPopularityCore.Services.StocksPopularityService
 {
-    public interface IStocksPopularityService<TStockPopularityItem> where TStockPopularityItem : IStockPopularityItem
+    public interface IStockPopularityService<TStockPopularityItem> where TStockPopularityItem : IStockPopularityItem
     {
-        public Task<StocksPopularity<TStockPopularityItem>> FetchStocksPopularity();
+        public Task<StockPopularity<TStockPopularityItem>> FetchStockPopularity();
     }
 }
