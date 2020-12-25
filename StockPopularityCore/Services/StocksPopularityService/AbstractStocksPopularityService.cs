@@ -8,14 +8,14 @@ using Microsoft.Extensions.Logging;
 using StockPopularityCore.Model;
 using StockPopularityCore.Utils;
 
-namespace StockPopularityCore.Services.PopularityService
+namespace StockPopularityCore.Services.StocksPopularityService
 {
-    public abstract class AbstractPopularityService<TStockPopularityItem> : IPopularityService<TStockPopularityItem>
+    public abstract class AbstractStocksPopularityService<TStockPopularityItem> : IStocksPopularityService<TStockPopularityItem>
         where TStockPopularityItem : IStockPopularityItem
     {
         private readonly HttpClient _httpClient;
         private readonly IDateProvider _dateProvider;
-        private readonly ILogger<AbstractPopularityService<TStockPopularityItem>> _logger;
+        private readonly ILogger<AbstractStocksPopularityService<TStockPopularityItem>> _logger;
         private readonly HtmlDocumentReader _documentReader;
 
         protected abstract string Uri { get; }
@@ -24,8 +24,8 @@ namespace StockPopularityCore.Services.PopularityService
         protected abstract string WebsiteDisplayName { get; }
 
 
-        protected AbstractPopularityService(HttpClient httpClient, IDateProvider dateProvider,
-                                            ILogger<AbstractPopularityService<TStockPopularityItem>> logger)
+        protected AbstractStocksPopularityService(HttpClient httpClient, IDateProvider dateProvider,
+                                            ILogger<AbstractStocksPopularityService<TStockPopularityItem>> logger)
         {
             _httpClient = httpClient;
             _dateProvider = dateProvider;

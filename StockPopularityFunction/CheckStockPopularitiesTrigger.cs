@@ -3,8 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
-using StockPopularityCore.Services.Bankier;
-using StockPopularityCore.Services.Biznesradar;
+using StockPopularityCore.Services.StocksPopularityService;
 
 namespace StockPopularityFunction
 {

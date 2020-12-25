@@ -2,7 +2,7 @@ using System;
 using Microsoft.Extensions.Logging;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
-using StockPopularityCore.Services.PopularityService;
+using StockPopularityCore.Services.StocksPopularityService;
 using StockPopularityCore.Utils;
 
 [assembly: FunctionsStartup(typeof(StockPopularityFunction.Startup))]
@@ -13,8 +13,8 @@ namespace StockPopularityFunction
     {
         public override void Configure(IFunctionsHostBuilder builder)
         {
-            builder.Services.AddHttpClient<IBiznesradarPopularityService, BiznesradarPopularityService>();
-            builder.Services.AddHttpClient<IBankierPopularityService, BankierPopularityService>();
+            builder.Services.AddHttpClient<IBiznesradarPopularityService, BiznesradarStocksPopularityService>();
+            builder.Services.AddHttpClient<IBankierPopularityService, BankierStocksPopularityService>();
             builder.Services.AddSingleton<IHtmlDocumentReader, HtmlDocumentReader>();
             builder.Services.AddSingleton<IDateProvider, DateProvider>();
         }

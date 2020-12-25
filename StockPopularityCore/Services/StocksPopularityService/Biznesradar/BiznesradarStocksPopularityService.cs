@@ -4,12 +4,12 @@ using Microsoft.Extensions.Logging;
 using StockPopularityCore.Model;
 using StockPopularityCore.Utils;
 
-namespace StockPopularityCore.Services.PopularityService
+namespace StockPopularityCore.Services.StocksPopularityService
 {
-    public class BiznesradarPopularityService : AbstractPopularityService<StockPopularityItem>, IBiznesradarPopularityService
+    public class BiznesradarStocksPopularityService : AbstractStocksPopularityService<StockPopularityItem>, IBiznesradarPopularityService
     {
-        public BiznesradarPopularityService(HttpClient httpClient, IDateProvider dateProvider,
-                                            ILogger<BiznesradarPopularityService> logger)
+        public BiznesradarStocksPopularityService(HttpClient httpClient, IDateProvider dateProvider,
+                                            ILogger<BiznesradarStocksPopularityService> logger)
             : base(httpClient, dateProvider, logger)
         {
         }

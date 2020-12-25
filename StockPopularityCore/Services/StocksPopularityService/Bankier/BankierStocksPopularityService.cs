@@ -4,12 +4,12 @@ using Microsoft.Extensions.Logging;
 using StockPopularityCore.Model;
 using StockPopularityCore.Utils;
 
-namespace StockPopularityCore.Services.PopularityService
+namespace StockPopularityCore.Services.StocksPopularityService
 {
-    public class BankierPopularityService : AbstractPopularityService<BankierStockPopularityItem>, IBankierPopularityService
+    public class BankierStocksPopularityService : AbstractStocksPopularityService<BankierStockPopularityItem>, IBankierPopularityService
     {
-        public BankierPopularityService(HttpClient httpClient, IDateProvider dateProvider,
-                                        ILogger<BankierPopularityService> logger)
+        public BankierStocksPopularityService(HttpClient httpClient, IDateProvider dateProvider,
+                                        ILogger<BankierStocksPopularityService> logger)
             : base(httpClient, dateProvider, logger)
         {
         }
