@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace StockPopularityFunction.Model
 {
     [SuppressMessage("ReSharper", "InconsistentNaming")]
-    public sealed class StockPopularityEntity<TRanking> where TRanking : IRanking
+    public sealed class StockPopularityEntity<TRanking> where TRanking : Ranking
     {
         public string dateTime { get; }
         private DateTimeOffset _dateTimeOffset { get; }
@@ -19,7 +19,7 @@ namespace StockPopularityFunction.Model
         }
 
 
-        public StockPopularityEntity<T> Casted<T>() where T : IRanking
+        public StockPopularityEntity<T> Casted<T>() where T : Ranking
         {
             return new StockPopularityEntity<T>(_dateTimeOffset, source as Source<T>);
         }

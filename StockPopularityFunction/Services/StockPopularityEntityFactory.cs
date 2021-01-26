@@ -7,12 +7,12 @@ namespace StockPopularityFunction.Services
 {
     public interface IStockPopularityEntityFactory
     {
-        StockPopularityEntity<IRanking> CreateEntities(StockPopularity<IStockPopularityItem> stockPopularity);
+        StockPopularityEntity<Ranking> CreateEntities(StockPopularity<IStockPopularityItem> stockPopularity);
     }
 
     public class StockPopularityEntityFactory : IStockPopularityEntityFactory
     {
-        public StockPopularityEntity<IRanking> CreateEntities(StockPopularity<IStockPopularityItem> stockPopularity)
+        public StockPopularityEntity<Ranking> CreateEntities(StockPopularity<IStockPopularityItem> stockPopularity)
         {
             var itemType = stockPopularity.Items.First().GetType();
             if (itemType == typeof(BankierStockPopularityItem))
@@ -30,27 +30,27 @@ namespace StockPopularityFunction.Services
         }
 
 
-        private static StockPopularityEntity<IRanking> CreateEntitiesForBankier(
+        private static StockPopularityEntity<Ranking> CreateEntitiesForBankier(
             StockPopularity<IStockPopularityItem> stockPopularity)
         {
             var casted = stockPopularity.Casted<BankierStockPopularityItem>();
 
-            var source = new Source<IRanking>(
+            var source = new Source<Ranking>(
                 "Bankier", casted.Items
                                  .Select(x => new BankierRanking(x.StockName.Codename, x.Rank, x.PostsFromLast30DaysCount)));
-            return new StockPopularityEntity<IRanking>(casted.DateTime, source);
+            return new StockPopularityEntity<Ranking>(casted.DateTime, source);
         }
 
 
-        private StockPopularityEntity<IRanking> CreateEntitiesForBiznesradar(
+        private StockPopularityEntity<Ranking> CreateEntitiesForBiznesradar(
             StockPopularity<IStockPopularityItem> stockPopularity)
         {
             var casted = stockPopularity.Casted<StockPopularityItem>();
 
-            var source = new Source<IRanking>(
+            var source = new Source<Ranking>(
                 "Bankier", casted.Items
                                  .Select(x => new Ranking(x.StockName.Codename, x.Rank)));
-            return new StockPopularityEntity<IRanking>(casted.DateTime, source);
+            return new StockPopularityEntity<Ranking>(casted.DateTime, source);
         }
     }
 }

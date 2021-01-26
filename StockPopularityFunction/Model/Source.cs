@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace StockPopularityFunction.Model
 {
-    public sealed class Source<TRanking> where TRanking: IRanking
+    public sealed class Source<TRanking> where TRanking: Ranking
 
     {
     public string name { get; }
