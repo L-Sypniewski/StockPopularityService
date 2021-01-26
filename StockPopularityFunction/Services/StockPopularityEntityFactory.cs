@@ -22,7 +22,7 @@ namespace StockPopularityFunction.Services
 
             if (itemType == typeof(StockPopularityItem))
             {
-                return CreateEntitiesForBankier(stockPopularity);
+                return CreateEntitiesForBiznesradar(stockPopularity);
             }
 
             throw new ArgumentException(

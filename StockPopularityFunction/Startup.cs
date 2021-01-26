@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using StockPopularityCore.Services.StocksPopularityService;
 using StockPopularityCore.Utils;
 using StockPopularityFunction;
+using StockPopularityFunction.Services;
 
 [assembly: FunctionsStartup(typeof(Startup))]
 
@@ -20,6 +21,7 @@ namespace StockPopularityFunction
             builder.Services.AddSingleton<IDateProvider, DateProvider>();
 
             builder.Services.AddSingleton<IAggregateStockPopularityService, AggregateStockPopularityService>();
+            builder.Services.AddSingleton<IStockPopularityEntityFactory, StockPopularityEntityFactory>();
         }
 
 

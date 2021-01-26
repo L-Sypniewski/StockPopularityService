@@ -14,7 +14,7 @@ namespace StockPopularityFunction.Model
         public StockPopularityEntity(DateTimeOffset dateTimeOffset, Source<TRanking> source)
         {
             _dateTimeOffset = dateTimeOffset;
-            dateTime = _dateTimeOffset.ToString("MM-YYYY");
+            dateTime = _dateTimeOffset.ToString("MM-yyyy");
             this.source = source;
         }
 
