@@ -5,6 +5,6 @@ namespace StockPopularityCore.Services.StocksPopularityService
 {
     public interface IBankierPopularityService
     {
-        public Task<StockPopularity<BankierStockPopularityItem>> FetchStockPopularity();
+        public Task<StockPopularity<BankierStockPopularityItem>> FetchBankierStockPopularity();
     }
 }

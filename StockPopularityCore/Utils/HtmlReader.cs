@@ -23,7 +23,7 @@ namespace StockPopularityCore.Utils
         public HtmlDocument HtmlDocumentFrom(string htmlString)
         {
             _logger.LogDebug("Creating HTML document from string");
-            _logger.LogTrace(htmlString);
+            _logger.LogTrace("Html string: {HtmlString}", htmlString);
 
             var htmlDoc = new HtmlDocument();
             htmlDoc.LoadHtml(htmlString);

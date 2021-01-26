@@ -10,13 +10,13 @@ using StockPopularityCore.Utils;
 
 namespace StockPopularityCore.Services.StocksPopularityService
 {
-    public abstract class AbstractStockPopularityService<TStockPopularityItem> : IStockPopularityService<TStockPopularityItem>
+    public abstract class AbstractStockPopularityService<TStockPopularityItem> : IStockPopularityService
         where TStockPopularityItem : IStockPopularityItem
     {
         private readonly HttpClient _httpClient;
         private readonly IDateProvider _dateProvider;
         private readonly ILogger<AbstractStockPopularityService<TStockPopularityItem>> _logger;
-        private readonly HtmlDocumentReader _documentReader;
+        private readonly IHtmlDocumentReader _documentReader;
 
         protected abstract string Uri { get; }
         protected abstract string TableXpath { get; }
@@ -25,7 +25,7 @@ namespace StockPopularityCore.Services.StocksPopularityService
 
 
         protected AbstractStockPopularityService(HttpClient httpClient, IDateProvider dateProvider,
-                                                  ILogger<AbstractStockPopularityService<TStockPopularityItem>> logger)
+                                                 ILogger<AbstractStockPopularityService<TStockPopularityItem>> logger)
         {
             _httpClient = httpClient;
             _dateProvider = dateProvider;
@@ -34,12 +34,12 @@ namespace StockPopularityCore.Services.StocksPopularityService
         }
 
 
-        public async Task<StockPopularity<TStockPopularityItem>> FetchStockPopularity()
+        public async Task<StockPopularity<IStockPopularityItem>> FetchStockPopularity()
         {
             try
             {
                 var pageSource = await _httpClient.GetStringAsync(Uri);
-                _logger.LogInformation("Fetched site source from url: {uri}", Uri);
+                _logger.LogInformation("Fetched site source from url: {Uri}", Uri);
 
                 var currentDate = _dateProvider.Now;
                 var tableElements = TableElementsFrom(pageSource);
@@ -47,15 +47,15 @@ namespace StockPopularityCore.Services.StocksPopularityService
 
                 var stocksPopularityItems = tableElements.Select(PopularityItemFrom).ToArray();
 
-                _logger.LogInformation("Created stock popularity items from {websiteName} data", WebsiteDisplayName);
+                _logger.LogInformation("Created stock popularity items from {WebsiteName} data", WebsiteDisplayName);
 
-                return new StockPopularity<TStockPopularityItem>(stocksPopularityItems, currentDate);
+                return new StockPopularity<IStockPopularityItem>(stocksPopularityItems.Cast<IStockPopularityItem>(), currentDate);
             }
             catch (Exception exception)
             {
-                _logger.LogError(
-                    "An exception has been throw when fetching stocks popularity from {websiteName}. Exception message: {message}",
-                    WebsiteDisplayName, exception);
+                _logger.LogError(exception,
+                                 "An exception has been throw when fetching stocks popularity from {WebsiteName}. Exception message:",
+                                 WebsiteDisplayName);
                 throw;
             }
         }
@@ -79,5 +79,12 @@ namespace StockPopularityCore.Services.StocksPopularityService
 
 
         protected abstract TStockPopularityItem PopularityItemFrom(string rowString);
+
+
+        protected async Task<StockPopularity<TStockPopularityItem>> Casted()
+        {
+            var result = await FetchStockPopularity();
+            return new StockPopularity<TStockPopularityItem>(result.Items.Cast<TStockPopularityItem>(), result.DateTime);
+        }
     }
 }

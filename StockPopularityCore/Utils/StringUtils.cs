@@ -10,7 +10,7 @@ namespace StockPopularityCore.Utils
 
 
         /// <summary>
-        ///     Returns a given string without the first and the last characters.
+        ///  Returns a given string without the first and the last characters.
         /// </summary>
         /// <param name="s">A string to trim</param>
         /// <returns>Given string without the first and the last character</returns>

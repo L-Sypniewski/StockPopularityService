@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Net.Http;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using StockPopularityCore.Model;
 using StockPopularityCore.Utils;
@@ -10,7 +11,7 @@ namespace StockPopularityCore.Services.StocksPopularityService
         IBankierPopularityService
     {
         public BankierPopularityService(HttpClient httpClient, IDateProvider dateProvider,
-                                              ILogger<BankierPopularityService> logger)
+                                        ILogger<BankierPopularityService> logger)
             : base(httpClient, dateProvider, logger)
         {
         }
@@ -31,5 +32,8 @@ namespace StockPopularityCore.Services.StocksPopularityService
             var postsFromLast30DaysCount = int.Parse(stringElements[3]);
             return new BankierStockPopularityItem(stockName, rank, postsFromLast30DaysCount);
         }
+
+
+        public async Task<StockPopularity<BankierStockPopularityItem>> FetchBankierStockPopularity() => await Casted();
     }
 }

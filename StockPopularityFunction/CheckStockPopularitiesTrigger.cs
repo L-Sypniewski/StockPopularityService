@@ -1,5 +1,3 @@
-using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
@@ -9,30 +7,25 @@ namespace StockPopularityFunction
 {
     public class CheckStockPopularitiesTrigger
     {
-        private readonly IBiznesradarPopularityService _biznesradarPopularityService;
-        private readonly IBankierPopularityService _bankierPopularityService;
+        private readonly IAggregateStockPopularityService _aggregateStockPopularityService;
 
 
-        public CheckStockPopularitiesTrigger(IBiznesradarPopularityService biznesradarPopularityService,
-                                             IBankierPopularityService bankierPopularityService)
+        public CheckStockPopularitiesTrigger(IAggregateStockPopularityService aggregateStockPopularityService)
         {
-            _biznesradarPopularityService = biznesradarPopularityService;
-            _bankierPopularityService = bankierPopularityService;
-            _biznesradarPopularityService = biznesradarPopularityService;
+            _aggregateStockPopularityService = aggregateStockPopularityService;
         }
 
 
         [FunctionName("CheckStockPopularitiesTrigger")]
-        public async Task RunAsync([TimerTrigger("0 */30 * * * *")] TimerInfo myTimer, ILogger log)
+        public async Task RunAsync([TimerTrigger("0 */30 * * * *")] TimerInfo myTimer,
+                                   ILogger log)
         {
-            log.LogInformation($"CheckStockPopularitiesTrigger executed at: {DateTime.UtcNow}");
-            var biznesRadarstocksPopularityTask = _biznesradarPopularityService.FetchStockPopularity();
-            var bankierStockPopularityTask = _bankierPopularityService.FetchStockPopularity();
-            await Task.WhenAll(biznesRadarstocksPopularityTask, bankierStockPopularityTask);
+            await foreach (var s in _aggregateStockPopularityService.FetchStockPopularityRankings()) log.LogError(s.ToString());
 
-            var biznesRadarstocksPopularity = biznesRadarstocksPopularityTask.Result;
-            var bankierStockPopularity = bankierStockPopularityTask.Result;
-            int i = 2;
+
+            // var taskAddBankierItems = bankierItems.AddAsync(bankierStockPopularity);
+            // var taskAddBiznesradarItems = biznesradarItems.AddAsync(biznesRadarstocksPopularity);
+            // await Task.WhenAll(/*taskAddBankierItems, */taskAddBiznesradarItems);
         }
     }
 }

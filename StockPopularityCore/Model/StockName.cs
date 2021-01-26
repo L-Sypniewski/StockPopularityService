@@ -2,8 +2,8 @@ namespace StockPopularityCore.Model
 {
     public readonly struct StockName
     {
-        public readonly string? LongName { get; }
-        public readonly string Codename { get; }
+        public string? LongName { get; }
+        public string Codename { get; }
 
 
         public StockName(string? longName, string codename)
