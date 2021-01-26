@@ -18,6 +18,11 @@ namespace StockPopularityFunction
 
         [FunctionName("CheckStockPopularitiesTrigger")]
         public async Task RunAsync([TimerTrigger("0 */30 * * * *")] TimerInfo myTimer,
+                                   [CosmosDB(
+                                       databaseName: "ToDoItems",
+                                       collectionName: "Items",
+                                       ConnectionStringSetting = "CosmosDBConnection")]
+                                   IAsyncCollector<Startup> toDoItemsOut,
                                    ILogger log)
         {
             await foreach (var s in _aggregateStockPopularityService.FetchStockPopularityRankings()) log.LogError(s.ToString());
