@@ -1,16 +1,21 @@
 // ReSharper disable All
+
+using System.Collections.Generic;
+using System.Linq;
+
 namespace StockPopularityFunction.Model
 {
-    public class Source
+    public sealed class Source<TRanking> where TRanking: IRanking
+
     {
-        public string name { get; }
-        public Ranking[] rankings { get; }
+    public string name { get; }
+    public TRanking[] rankings { get; }
 
 
-        public Source(string name, Ranking[] rankings)
-        {
-            this.name = name;
-            this.rankings = rankings;
-        }
+    public Source(string name, IEnumerable<TRanking> rankings)
+    {
+        this.name = name;
+        this.rankings = rankings.ToArray();
+    }
     }
 }

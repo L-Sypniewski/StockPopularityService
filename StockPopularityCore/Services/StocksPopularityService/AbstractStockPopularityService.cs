@@ -84,7 +84,7 @@ namespace StockPopularityCore.Services.StocksPopularityService
         protected async Task<StockPopularity<TStockPopularityItem>> Casted()
         {
             var result = await FetchStockPopularity();
-            return new StockPopularity<TStockPopularityItem>(result.Items.Cast<TStockPopularityItem>(), result.DateTime);
+            return result.Casted<TStockPopularityItem>();
         }
     }
 }
