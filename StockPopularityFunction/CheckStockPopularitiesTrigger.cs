@@ -1,10 +1,8 @@
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
 using StockPopularityCore.Services.StocksPopularityService;
-using StockPopularityFunction.Model;
 using StockPopularityFunction.Services;
 
 namespace StockPopularityFunction
@@ -12,14 +10,14 @@ namespace StockPopularityFunction
     public class CheckStockPopularitiesTrigger
     {
         private readonly IAggregateStockPopularityService _aggregateStockPopularityService;
-        private readonly IStockPopularityEntityFactory stockPopularityEntityFactory;
+        private readonly IStockPopularityEntityFactory _stockPopularityEntityFactory;
 
 
         public CheckStockPopularitiesTrigger(IAggregateStockPopularityService aggregateStockPopularityService,
                                              IStockPopularityEntityFactory stockPopularityEntityFactory)
         {
             _aggregateStockPopularityService = aggregateStockPopularityService;
-            this.stockPopularityEntityFactory = stockPopularityEntityFactory;
+            this._stockPopularityEntityFactory = stockPopularityEntityFactory;
         }
 
 
@@ -33,7 +31,7 @@ namespace StockPopularityFunction
                                    ILogger log)
         {
             var testy = await _aggregateStockPopularityService.FetchStockPopularityRankings()
-                                                              .Select(s => stockPopularityEntityFactory.CreateEntities(s))
+                                                              .Select(s => _stockPopularityEntityFactory.CreateEntities(s))
                                                               .ToListAsync();
 
             int i = 2;

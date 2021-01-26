@@ -17,11 +17,5 @@ namespace StockPopularityFunction.Model
             dateTime = _dateTimeOffset.ToString("MM-yyyy");
             this.source = source;
         }
-
-
-        public StockPopularityEntity<T> Casted<T>() where T : Ranking
-        {
-            return new StockPopularityEntity<T>(_dateTimeOffset, source as Source<T>);
-        }
     }
 }

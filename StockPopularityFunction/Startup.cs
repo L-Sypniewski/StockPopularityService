@@ -22,6 +22,7 @@ namespace StockPopularityFunction
 
             builder.Services.AddSingleton<IAggregateStockPopularityService, AggregateStockPopularityService>();
             builder.Services.AddSingleton<IStockPopularityEntityFactory, StockPopularityEntityFactory>();
+            builder.Services.AddSingleton<ISourceFactory, SourceFactory>();
         }
 
 
