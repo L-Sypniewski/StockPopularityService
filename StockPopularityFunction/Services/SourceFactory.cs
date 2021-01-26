@@ -31,7 +31,7 @@ namespace StockPopularityFunction.Services
             var casted = stockPopularity.Casted<BankierStockPopularityItem>();
 
             return new Source<Ranking>("Bankier", casted.Items
-                                                        .Select(x => new BankierRanking(x.StockName.Codename, x.Rank,
+                                                        .Select(x => new BankierRanking(x.StockName, x.Rank,
                                                                     x.PostsFromLast30DaysCount)));
         }
 
@@ -41,7 +41,7 @@ namespace StockPopularityFunction.Services
             var casted = stockPopularity.Casted<StockPopularityItem>();
 
             return new Source<Ranking>("Bankier", casted.Items
-                                                        .Select(x => new Ranking(x.StockName.Codename, x.Rank)));
+                                                        .Select(x => new Ranking(x.StockName, x.Rank)));
         }
     }
 }

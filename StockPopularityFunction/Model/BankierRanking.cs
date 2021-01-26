@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using StockPopularityCore.Model;
 
 namespace StockPopularityFunction.Model
 {
@@ -9,6 +10,13 @@ namespace StockPopularityFunction.Model
 
 
         public BankierRanking(string name, int rank, int postsFromLast30DaysCount) : base(name, rank)
+        {
+            this.postsFromLast30DaysCount = postsFromLast30DaysCount;
+        }
+
+
+        public BankierRanking(StockName stockName, int rank, int postsFromLast30DaysCount) : this(
+            stockName.Codename, rank, postsFromLast30DaysCount)
         {
             this.postsFromLast30DaysCount = postsFromLast30DaysCount;
         }

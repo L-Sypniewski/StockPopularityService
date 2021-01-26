@@ -6,6 +6,7 @@ namespace StockPopularityFunction.Model
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public sealed class StockPopularityEntity<TRanking> where TRanking : Ranking
     {
+        public string dateTimeMonth { get; }
         public string dateTime { get; }
         private DateTimeOffset _dateTimeOffset { get; }
         public Source<TRanking> source { get; }
@@ -15,6 +16,7 @@ namespace StockPopularityFunction.Model
         {
             _dateTimeOffset = dateTimeOffset;
             dateTime = _dateTimeOffset.ToString("MM-yyyy");
+            dateTimeMonth = _dateTimeOffset.ToString();
             this.source = source;
         }
     }
