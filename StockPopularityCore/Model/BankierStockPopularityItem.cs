@@ -1,6 +1,6 @@
 namespace StockPopularityCore.Model
 {
-    public struct BankierStockPopularityItem : IStockPopularityItem
+    public readonly struct BankierStockPopularityItem : IStockPopularityItem
     {
         public StockName StockName { get; }
         public int Rank { get; }
