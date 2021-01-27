@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using StockPopularityCore.Model;
 using StockPopularityCore.Utils;
 
@@ -25,12 +26,13 @@ namespace StockPopularityCore.Services.StocksPopularityService
 
 
         protected AbstractStockPopularityService(HttpClient httpClient, IDateProvider dateProvider,
-                                                 ILogger<AbstractStockPopularityService<TStockPopularityItem>> logger)
+                                                 IHtmlDocumentReader htmlDocumentReader,
+                                                 ILogger<AbstractStockPopularityService<TStockPopularityItem>>? logger)
         {
             _httpClient = httpClient;
             _dateProvider = dateProvider;
-            _logger = logger;
-            _documentReader = new HtmlDocumentReader();
+            _documentReader = htmlDocumentReader;
+            _logger = logger ?? NullLogger<AbstractStockPopularityService<TStockPopularityItem>>.Instance;
         }
 
 

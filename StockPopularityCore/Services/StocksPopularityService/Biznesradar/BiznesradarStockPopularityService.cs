@@ -12,8 +12,9 @@ namespace StockPopularityCore.Services.StocksPopularityService
         IBiznesradarPopularityService
     {
         public BiznesradarStockPopularityService(HttpClient httpClient, IDateProvider dateProvider,
-                                                 ILogger<BiznesradarStockPopularityService> logger)
-            : base(httpClient, dateProvider, logger)
+                                                 IHtmlDocumentReader htmlDocumentReader,
+                                                 ILogger<BiznesradarStockPopularityService>? logger = null)
+            : base(httpClient, dateProvider, htmlDocumentReader, logger)
         {
         }
 

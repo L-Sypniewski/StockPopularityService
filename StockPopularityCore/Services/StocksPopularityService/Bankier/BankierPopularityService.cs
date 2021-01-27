@@ -10,9 +10,9 @@ namespace StockPopularityCore.Services.StocksPopularityService
     public class BankierPopularityService : AbstractStockPopularityService<BankierStockPopularityItem>,
         IBankierPopularityService
     {
-        public BankierPopularityService(HttpClient httpClient, IDateProvider dateProvider,
-                                        ILogger<BankierPopularityService> logger)
-            : base(httpClient, dateProvider, logger)
+        public BankierPopularityService(HttpClient httpClient, IDateProvider dateProvider, IHtmlDocumentReader htmlDocumentReader,
+                                        ILogger<BankierPopularityService>? logger = null)
+            : base(httpClient, dateProvider, htmlDocumentReader, logger)
         {
         }
 

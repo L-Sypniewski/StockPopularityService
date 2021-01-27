@@ -31,6 +31,7 @@ namespace StockPopularityFunction
 
             builder.Services.AddSingleton<IHtmlDocumentReader, HtmlDocumentReader>();
             builder.Services.AddSingleton<IDateProvider, DateProvider>();
+            builder.Services.AddSingleton<IHtmlDocumentReader, HtmlDocumentReader>();
 
             builder.Services.AddSingleton<IAggregateStockPopularityService, AggregateStockPopularityService>();
             builder.Services.AddSingleton<IStockPopularityEntityFactory, StockPopularityEntityFactory>();
