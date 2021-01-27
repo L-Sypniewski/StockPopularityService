@@ -1,6 +1,7 @@
-using System;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using StockPopularityCore.Services.StocksPopularityService;
 using StockPopularityCore.Utils;
 using StockPopularityFunction;
@@ -14,6 +15,17 @@ namespace StockPopularityFunction
     {
         public override void Configure(IFunctionsHostBuilder builder)
         {
+            builder
+                .Services
+                .AddOptions<StockPopularityDbOptions>()
+                .Configure<IConfiguration>((messageResponderSettings, configuration) =>
+                {
+                    configuration
+                        .GetSection(StockPopularityDbOptions.ConfigName)
+                        .Bind(messageResponderSettings);
+                });
+
+
             builder.Services.AddHttpClient<IStockPopularityService, BiznesradarStockPopularityService>();
             builder.Services.AddHttpClient<IStockPopularityService, BankierPopularityService>();
 
@@ -24,9 +36,5 @@ namespace StockPopularityFunction
             builder.Services.AddSingleton<IStockPopularityEntityFactory, StockPopularityEntityFactory>();
             builder.Services.AddSingleton<ISourceFactory, SourceFactory>();
         }
-
-
-        public static bool IsDevelopmentEnvironment =>
-            Environment.GetEnvironmentVariable("AZURE_FUNCTIONS_ENVIRONMENT") == "Development";
     }
 }

@@ -4,6 +4,7 @@ using StockPopularityCore.Model;
 namespace StockPopularityFunction.Model
 {
     [SuppressMessage("ReSharper", "InconsistentNaming")]
+    [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
     public class BankierRanking : Ranking
     {
         public int postsFromLast30DaysCount { get; }
