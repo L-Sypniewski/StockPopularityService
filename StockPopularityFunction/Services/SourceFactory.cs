@@ -34,7 +34,7 @@ namespace StockPopularityFunction.Services
         {
             var casted = stockPopularity.Casted<StockPopularityItem>();
 
-            return new Source<Ranking>("Bankier", casted.Items
+            return new Source<Ranking>("Biznesradar", casted.Items
                                                         .Select(x => new Ranking(x.StockName, x.Rank)));
         }
     }
