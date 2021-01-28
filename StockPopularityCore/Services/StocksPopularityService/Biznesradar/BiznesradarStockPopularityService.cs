@@ -47,15 +47,22 @@ namespace StockPopularityCore.Services.StocksPopularityService
             var names = rowStringElements[indexOfElementWithNames];
 
             var stockNameContainsTwoCodeNames = names.EndsWith(")");
-
             if (stockNameContainsTwoCodeNames)
             {
                 var splitString = names.Split("(");
                 var codename = splitString.First().TrimEnd();
-                var codenameIsIndexName = codename.Contains('.');
+                var codenameIsIndexName = codename.StartsWith('^') || codename.Contains('.');
 
                 var longName = codenameIsIndexName ? null : splitString.Last().TrimEnd(')');
-                return new StockName(codename, longName);
+                return new StockName(codename.TrimStart('^'), longName);
+            }
+
+            var stockIsCurrencyPair = names.CharOccurrences('/') == 2;
+            if (stockIsCurrencyPair)
+            {
+                var codeName = names.Substring(0, 7);
+                var longName = names.Substring(7).Trim();
+                return new StockName(codeName, longName);
             }
 
             return new StockName(names);
