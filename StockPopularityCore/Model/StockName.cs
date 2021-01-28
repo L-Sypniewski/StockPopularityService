@@ -8,8 +8,8 @@ namespace StockPopularityCore.Model
 
         public StockName(string codename, string? longName = null)
         {
-            LongName = longName;
-            Codename = codename;
+            LongName = longName?.Trim();
+            Codename = codename.Trim();
         }
 
 

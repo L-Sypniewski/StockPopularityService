@@ -35,7 +35,7 @@ namespace StockPopularityCore.Utils
             // Method taken from: https://stackoverflow.com/a/541994/8297552. LINQ solution is less performant
             var count = 0;
             foreach (var c in s)
-                if (c == '/')
+                if (c == ch)
                     count++;
             return count;
         }
