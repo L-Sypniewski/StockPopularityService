@@ -18,7 +18,9 @@ namespace StockPopularityCore.Utils
                                       .ToArray();
 
             foreach (var type in typesFromAssemblies)
+            {
                 services.Add(new ServiceDescriptor(typeof(T), type, lifetime));
+            }
         }
 
 

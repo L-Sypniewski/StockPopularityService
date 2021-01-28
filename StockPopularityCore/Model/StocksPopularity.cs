@@ -16,6 +16,7 @@ namespace StockPopularityCore.Model
             DateTime = dateTime;
         }
 
+
         public StockPopularity<T> Casted<T>() where T : IStockPopularityItem
         {
             return new StockPopularity<T>(Items.Cast<T>(), DateTime);

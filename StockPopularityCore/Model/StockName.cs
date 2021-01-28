@@ -6,7 +6,7 @@ namespace StockPopularityCore.Model
         public string Codename { get; }
 
 
-        public StockName(string? longName, string codename)
+        public StockName(string codename, string? longName = null)
         {
             LongName = longName;
             Codename = codename;

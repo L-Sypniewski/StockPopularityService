@@ -10,7 +10,8 @@ namespace StockPopularityCoreTests.Services
     {
         private readonly BiznesradarStockPopularityServiceFetchStockPopularityFixture _fixture;
         private StockPopularity<StockPopularityItem> FetchedStockPopularity => _fixture.FetchedStockPopularity;
-        private DateTimeOffset ExpectedDateTimeOffset  => _fixture.ExpectedDateTimeOffset;
+        private DateTimeOffset ExpectedDateTimeOffset => _fixture.ExpectedDateTimeOffset;
+        private StockPopularityItem[] ExpectedPopularityItems => _fixture.ExpectedPopularityItems;
 
 
         public BiznesradarStockPopularityServiceFetchStockPopularityShouldReturnCorrectData(
@@ -32,25 +33,7 @@ namespace StockPopularityCoreTests.Services
         [Fact(DisplayName = "BiznesradarStockPopularityService.FetchStockPopularity() should return correct data")]
         public void BiznesradarStockPopularityService_FetchStockPopularity_should_return_correct_data()
         {
-            FetchedStockPopularity.Items.Should().StartWith(ExpectedPopularityItems());
-            // _fetchedStockPopularity.Items.Should().be(ExpectedPopularityItems());
-
-            // ExpectedPopularityItems().Should().BeSubsetOf(_fetchedStockPopularity.Items);
-        }
-
-
-        private StockPopularity<StockPopularityItem> ExpectedStockPopularity()
-        {
-            return new StockPopularity<StockPopularityItem>(ExpectedPopularityItems(), ExpectedDateTimeOffset);
-        }
-
-
-        private static StockPopularityItem[] ExpectedPopularityItems()
-        {
-            return new[]
-            {
-                new StockPopularityItem(new StockName("CDPROJEKT", "CDR"), 1),
-            };
+            FetchedStockPopularity.Items.Should().StartWith(ExpectedPopularityItems);
         }
     }
 }

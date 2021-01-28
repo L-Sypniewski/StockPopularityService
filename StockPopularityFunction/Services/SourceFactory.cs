@@ -11,15 +11,9 @@ namespace StockPopularityFunction.Services
         {
             var itemType = stockPopularity.Items.First().GetType();
 
-            if (itemType == typeof(BankierStockPopularityItem))
-            {
-                return CreateSourceForBankier(stockPopularity);
-            }
+            if (itemType == typeof(BankierStockPopularityItem)) return CreateSourceForBankier(stockPopularity);
 
-            if (itemType == typeof(StockPopularityItem))
-            {
-                return CreateSourceForBiznesradar(stockPopularity);
-            }
+            if (itemType == typeof(StockPopularityItem)) return CreateSourceForBiznesradar(stockPopularity);
 
             throw new ArgumentException(
                 "IStockPopularityItem has not been handled by the factory yet, implement missing feature!");

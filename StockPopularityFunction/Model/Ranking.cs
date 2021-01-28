@@ -19,7 +19,9 @@ namespace StockPopularityFunction.Model
             this.fullName = fullName;
         }
 
-        public Ranking(StockName stockName, int rank) : this(stockName.Codename, rank, stockName.LongName) {
+
+        public Ranking(StockName stockName, int rank) : this(stockName.Codename, rank, stockName.LongName)
+        {
         }
     }
 }

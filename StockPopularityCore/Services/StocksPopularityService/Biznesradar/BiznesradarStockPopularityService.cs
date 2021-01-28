@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using StockPopularityCore.Model;
@@ -27,9 +28,11 @@ namespace StockPopularityCore.Services.StocksPopularityService
 
         protected override StockPopularityItem PopularityItemFrom(string rowString)
         {
-            var stringElements = rowString.Split(" ")
-                                          .Where(x => !string.IsNullOrEmpty(x))
-                                          .ToArray();
+            const string tempSeparator = "\t";
+            var rowStringWithoutMultipleSpaces = Regex.Replace(rowString, @"\s{2,}", tempSeparator);
+            var stringElements = rowStringWithoutMultipleSpaces.Split(tempSeparator)
+                                                               .Where(x => !string.IsNullOrEmpty(x))
+                                                               .ToArray();
 
             var rank = int.Parse(stringElements.First());
             var stockName = StockNameFrom(stringElements);
@@ -40,12 +43,22 @@ namespace StockPopularityCore.Services.StocksPopularityService
 
         private static StockName StockNameFrom(IReadOnlyList<string> rowStringElements)
         {
-            var stockNameContainsTwoCodeNames = rowStringElements.Count == 11;
-            var codename = rowStringElements[1];
-            var longName = stockNameContainsTwoCodeNames
-                ? rowStringElements[2].WithoutFirstAndLastCharacter()
-                : null;
-            return new StockName(longName, codename);
+            const int indexOfElementWithNames = 1;
+            var names = rowStringElements[indexOfElementWithNames];
+
+            var stockNameContainsTwoCodeNames = names.EndsWith(")");
+
+            if (stockNameContainsTwoCodeNames)
+            {
+                var splitString = names.Split("(");
+                var codename = splitString.First().TrimEnd();
+                var codenameIsIndexName = codename.Contains('.');
+
+                var longName = codenameIsIndexName ? null : splitString.Last().TrimEnd(')');
+                return new StockName(codename, longName);
+            }
+
+            return new StockName(names);
         }
 
 

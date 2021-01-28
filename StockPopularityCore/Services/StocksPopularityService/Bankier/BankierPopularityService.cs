@@ -28,7 +28,7 @@ namespace StockPopularityCore.Services.StocksPopularityService
             var stringElements = rowString.Split(" ").Where(x => x != "").ToArray();
 
             var rank = int.Parse(stringElements.First());
-            var stockName = new StockName(stringElements[1], stringElements[2]);
+            var stockName = new StockName(stringElements[2], stringElements[1]);
             var postsFromLast30DaysCount = int.Parse(stringElements[3]);
             return new BankierStockPopularityItem(stockName, rank, postsFromLast30DaysCount);
         }
