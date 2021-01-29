@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Core.Model;
 using FluentAssertions;
 using Xunit;
@@ -9,7 +10,7 @@ namespace CoreTests.Services.Biznesradar
     {
         private readonly BiznesradarPopularityServiceFetchBiznesradarPopularityFixture _fixture;
         private Popularity<BiznesradarPopularityItem> FetchedPopularity => _fixture.FetchedPopularity;
-        private BiznesradarPopularityItem[] ExpectedPopularityItems => _fixture.ExpectedPopularityItems;
+        private IEnumerable<BiznesradarPopularityItem> ExpectedPopularityItems => _fixture.ExpectedPopularityItems;
 
 
         public BiznesradarPopularityServiceFetchBiznesradarPopularityShouldFetchCorrectItems(

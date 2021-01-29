@@ -24,7 +24,7 @@ namespace CoreTests.Services.Biznesradar
         public BiznesradarPopularityItem[] ExpectedPopularityItems { get; }
         public Popularity<BiznesradarPopularityItem> ExpectedPopularity { get; }
 
-        public DateTimeOffset ExpectedDateTimeOffset => new DateTimeOffset(2000, 4, 2, 15, 24, 55, new TimeSpan(0, 20, 0));
+        public static DateTimeOffset ExpectedDateTimeOffset => new DateTimeOffset(2000, 4, 2, 15, 24, 55, new TimeSpan(0, 20, 0));
 
         private readonly string _htmlTestFilePath = Path.Combine("TestFiles", "BiznesradarRanking.html");
 
@@ -172,7 +172,7 @@ namespace CoreTests.Services.Biznesradar
                 CreatePopularityItem("KTY", 98, "KETY"),
                 CreatePopularityItem("RLP", 99, "RELPOL"),
                 CreatePopularityItem("MOV", 100, "MOVIEGAMES"),
-                CreatePopularityItem("AWM", 101, "AIRWAY"),
+                CreatePopularityItem("AWM", 101, "AIRWAY")
             };
         }
 

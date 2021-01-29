@@ -5,6 +5,6 @@ namespace Core.Model
         Commodity,
         Index,
         Stock,
-        Currency,
+        Currency
     }
 }

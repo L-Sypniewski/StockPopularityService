@@ -38,7 +38,7 @@ namespace CoreTests.Services.Biznesradar
         {
             new object[] {"JSW", new StockName("JSW")},
             new object[] {"IDH", new StockName("IDH")},
-            new object[] {"PZU", new StockName("PZU")},
+            new object[] {"PZU", new StockName("PZU")}
         };
     }
 }

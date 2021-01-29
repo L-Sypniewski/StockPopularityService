@@ -37,7 +37,7 @@ namespace CoreTests.Services.Biznesradar
         public static IEnumerable<object[]> CurrencyPairsData => new List<object[]>
         {
             new object[] {"USD/PLN 1:1 - dolar/złoty", new StockName("USD/PLN", "1:1 - dolar/złoty")},
-            new object[] {"EUR/PLN 1:1 - euro/złoty", new StockName("EUR/PLN", "1:1 - euro/złoty")},
+            new object[] {"EUR/PLN 1:1 - euro/złoty", new StockName("EUR/PLN", "1:1 - euro/złoty")}
         };
     }
 }

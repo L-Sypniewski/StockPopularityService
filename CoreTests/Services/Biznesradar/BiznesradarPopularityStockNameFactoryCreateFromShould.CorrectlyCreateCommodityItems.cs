@@ -38,7 +38,7 @@ namespace CoreTests.Services.Biznesradar
         {
             new object[] {"Brent Crude Oil Spot - Ropa Brent", new StockName("Ropa Brent", "Brent Crude Oil Spot")},
             new object[] {"WTI Light Crude Oil Spot - Ropa naftowa", new StockName("Ropa naftowa", "WTI Light Crude Oil Spot")},
-            new object[] {"Natural Gas Futures - Gaz ziemny", new StockName("Gaz ziemny", "Natural Gas Futures")},
+            new object[] {"Natural Gas Futures - Gaz ziemny", new StockName("Gaz ziemny", "Natural Gas Futures")}
         };
     }
 }

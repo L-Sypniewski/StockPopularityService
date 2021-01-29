@@ -40,7 +40,7 @@ namespace CoreTests.Services.Biznesradar
             new object[] {"MVP (MARVIPOL)", new StockName("MVP", "MARVIPOL")},
             new object[] {"UNT (UNIMOT)", new StockName("UNT", "UNIMOT")},
             new object[] {"PCX (PCCEXOL)", new StockName("PCX", "PCCEXOL")},
-            new object[] {"AWM (AIRWAY)", new StockName("AWM", "AIRWAY")},
+            new object[] {"AWM (AIRWAY)", new StockName("AWM", "AIRWAY")}
         };
     }
 }
