@@ -1,4 +1,6 @@
+using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Core.Utils
 {
@@ -39,5 +41,8 @@ namespace Core.Utils
                     count++;
             return count;
         }
+
+
+        public static bool IsSingleWord(this string s) => !s.Any(char.IsWhiteSpace);
     }
 }

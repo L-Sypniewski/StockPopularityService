@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Core.Model;
+using Core.Utils;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 
@@ -70,6 +71,11 @@ namespace Core.Services.Popularity
         private static StockName CreateForStock(string name, ILogger logger)
         {
             logger.LogDebug("CreateForStock: {Name}", name);
+
+            if (name.IsSingleWord())
+            {
+                return new StockName(name);
+            }
 
             var splitString = name.Split("(");
             var codename = splitString.First();
