@@ -20,9 +20,9 @@ namespace CoreTests.Services.Biznesradar
     [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
     public class BiznesradarPopularityServiceFetchBiznesradarPopularityFixture : IDisposable
     {
-        public Popularity<PopularityItem> FetchedPopularity { get; }
-        public PopularityItem[] ExpectedPopularityItems { get; }
-        public Popularity<PopularityItem> ExpectedPopularity { get; }
+        public Popularity<BiznesradarPopularityItem> FetchedPopularity { get; }
+        public BiznesradarPopularityItem[] ExpectedPopularityItems { get; }
+        public Popularity<BiznesradarPopularityItem> ExpectedPopularity { get; }
 
         public DateTimeOffset ExpectedDateTimeOffset => new DateTimeOffset(2000, 4, 2, 15, 24, 55, new TimeSpan(0, 20, 0));
 
@@ -58,13 +58,13 @@ namespace CoreTests.Services.Biznesradar
         }
 
 
-        private Popularity<PopularityItem> CreateExpectedPopularity()
+        private Popularity<BiznesradarPopularityItem> CreateExpectedPopularity()
         {
-            return new Popularity<PopularityItem>(CreateExpectedPopularityItems(), ExpectedDateTimeOffset);
+            return new Popularity<BiznesradarPopularityItem>(CreateExpectedPopularityItems(), ExpectedDateTimeOffset);
         }
 
 
-        private static PopularityItem[] CreateExpectedPopularityItems()
+        private static BiznesradarPopularityItem[] CreateExpectedPopularityItems()
         {
             return new[]
             {
@@ -173,9 +173,9 @@ namespace CoreTests.Services.Biznesradar
         }
 
 
-        private static PopularityItem CreatePopularityItem(string codename, int rank, string? longName = null)
+        private static BiznesradarPopularityItem CreatePopularityItem(string codename, int rank, string? longName = null)
         {
-            return new PopularityItem(new StockName(codename, longName), rank);
+            return new BiznesradarPopularityItem(new StockName(codename, longName), rank);
         }
 
 

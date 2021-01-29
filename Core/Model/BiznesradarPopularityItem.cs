@@ -1,12 +1,12 @@
 namespace Core.Model
 {
-    public readonly struct PopularityItem : IPopularityItem
+    public readonly struct BiznesradarPopularityItem : IPopularityItem
     {
         public StockName StockName { get; }
         public int Rank { get; }
 
 
-        public PopularityItem(StockName stockName, int rank)
+        public BiznesradarPopularityItem(StockName stockName, int rank)
         {
             StockName = stockName;
             Rank = rank;

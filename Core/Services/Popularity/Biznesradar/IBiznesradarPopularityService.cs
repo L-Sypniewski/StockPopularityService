@@ -5,6 +5,6 @@ namespace Core.Services.Popularity
 {
     public interface IBiznesradarPopularityService
     {
-        public Task<Popularity<PopularityItem>> FetchBiznesradarPopularity();
+        public Task<Popularity<BiznesradarPopularityItem>> FetchBiznesradarPopularity();
     }
 }

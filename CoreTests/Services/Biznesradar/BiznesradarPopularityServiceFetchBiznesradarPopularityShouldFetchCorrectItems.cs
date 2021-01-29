@@ -8,8 +8,8 @@ namespace CoreTests.Services.Biznesradar
     public class BiznesradarPopularityServiceFetchBiznesradarPopularityShouldFetchCorrectItems
     {
         private readonly BiznesradarPopularityServiceFetchBiznesradarPopularityFixture _fixture;
-        private Popularity<PopularityItem> FetchedPopularity => _fixture.FetchedPopularity;
-        private PopularityItem[] ExpectedPopularityItems => _fixture.ExpectedPopularityItems;
+        private Popularity<BiznesradarPopularityItem> FetchedPopularity => _fixture.FetchedPopularity;
+        private BiznesradarPopularityItem[] ExpectedPopularityItems => _fixture.ExpectedPopularityItems;
 
 
         public BiznesradarPopularityServiceFetchBiznesradarPopularityShouldFetchCorrectItems(

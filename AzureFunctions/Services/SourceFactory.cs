@@ -13,7 +13,7 @@ namespace AzureFunctions.Services
 
             if (itemType == typeof(BankierPopularityItem)) return CreateSourceForBankier(popularity);
 
-            if (itemType == typeof(PopularityItem)) return CreateSourceForBiznesradar(popularity);
+            if (itemType == typeof(BiznesradarPopularityItem)) return CreateSourceForBiznesradar(popularity);
 
             throw new ArgumentException(
                 "IPopularityItem has not been handled by the factory yet, implement missing feature!");
@@ -32,7 +32,7 @@ namespace AzureFunctions.Services
 
         private static Source<Ranking> CreateSourceForBiznesradar(Popularity<IPopularityItem> popularity)
         {
-            var casted = popularity.Casted<PopularityItem>();
+            var casted = popularity.Casted<BiznesradarPopularityItem>();
 
             return new Source<Ranking>("Biznesradar", casted.Items
                                                         .Select(x => new Ranking(x.StockName, x.Rank)));

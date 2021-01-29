@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Core.Services.Popularity
 {
-    public class BiznesradarPopularityService : AbstractPopularityService<PopularityItem>,
+    public class BiznesradarPopularityService : AbstractPopularityService<BiznesradarPopularityItem>,
         IBiznesradarPopularityService
     {
         public BiznesradarPopularityService(HttpClient httpClient, IDateProvider dateProvider,
@@ -26,7 +26,7 @@ namespace Core.Services.Popularity
         protected override string WebsiteDisplayName => "Biznesradar";
 
 
-        protected override PopularityItem PopularityItemFrom(string rowString)
+        protected override BiznesradarPopularityItem PopularityItemFrom(string rowString)
         {
             const string tempSeparator = "\t";
             var rowStringWithoutMultipleSpaces = Regex.Replace(rowString, @"\s{2,}", tempSeparator);
@@ -37,7 +37,7 @@ namespace Core.Services.Popularity
             var rank = int.Parse(stringElements.First());
             var stockName = StockNameFrom(stringElements);
 
-            return new PopularityItem(stockName, rank);
+            return new BiznesradarPopularityItem(stockName, rank);
         }
 
 
@@ -78,6 +78,6 @@ namespace Core.Services.Popularity
         }
 
 
-        public async Task<Popularity<PopularityItem>> FetchBiznesradarPopularity() => await Casted();
+        public async Task<Popularity<BiznesradarPopularityItem>> FetchBiznesradarPopularity() => await Casted();
     }
 }
