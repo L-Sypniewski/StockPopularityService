@@ -1,24 +1,36 @@
+using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using Core.Model;
 using Core.Services.Popularity;
 using Core.Utils;
+using CoreTests.Services.Biznesradar;
 using FluentAssertions;
 using HtmlAgilityPack;
 using Moq;
 using Xunit;
 
-namespace CoreTests.Services.Biznesradar
+namespace CoreTests.IntegrationTests
 {
     [Collection("BiznesradarPopularityService.FetchBiznesradarPopularity()")]
-    public class BiznesradarPopularityServiceFetchBiznesradarPopularityShouldFetchCorrectAmountOfItems
+    public class BiznesradarPopularityServiceFetchBiznesradarPopularityShouldFetchCorrectItems
     {
         private readonly BiznesradarPopularityServiceFetchBiznesradarPopularityFixture _fixture;
         private readonly Popularity<BiznesradarPopularityItem> _fetchedPopularity;
+        private IEnumerable<BiznesradarPopularityItem> ExpectedPopularityItems => _fixture.ExpectedPopularityItems;
         private readonly string _htmlTestFilePath = Path.Combine("TestFiles", "BiznesradarRanking.html");
 
 
-        public BiznesradarPopularityServiceFetchBiznesradarPopularityShouldFetchCorrectAmountOfItems(
+        private static HtmlDocument CreateTestHtmlDocument(string htmlFilepath)
+        {
+            var testHtmlDocument = new HtmlDocument();
+            var pageSource = File.ReadAllText(htmlFilepath);
+            testHtmlDocument.LoadHtml(pageSource);
+            return testHtmlDocument;
+        }
+
+
+        public BiznesradarPopularityServiceFetchBiznesradarPopularityShouldFetchCorrectItems(
             BiznesradarPopularityServiceFetchBiznesradarPopularityFixture fixture)
         {
             _fixture = fixture;
@@ -32,30 +44,18 @@ namespace CoreTests.Services.Biznesradar
 
             var dateProvider = new Mock<IDateProvider>();
 
-            var typeFactory = new Mock<IPopularityItemTypeFactory>();
-            var stockNameFactory = new Mock<IBiznesradarPopularityStockNameFactory>();
+            var typeFactory = new PopularityItemTypeFactory();
+            var stockNameFactory = new BiznesradarPopularityStockNameFactory(typeFactory);
             var sut = new BiznesradarPopularityService(httpClient.Object, dateProvider.Object, htmlDocumentReader.Object,
-                                                       stockNameFactory.Object, typeFactory.Object);
+                                                       stockNameFactory, typeFactory);
             _fetchedPopularity = sut.FetchBiznesradarPopularity().Result;
         }
 
 
-        private static HtmlDocument CreateTestHtmlDocument(string htmlFilepath)
+        [Fact(DisplayName = "BiznesradarPopularityService.FetchBiznesradarPopularity() should return correct data")]
+        public void BiznesradarPopularityService_FetchBiznesradarPopularity_should_return_correct_data()
         {
-            var testHtmlDocument = new HtmlDocument();
-            var pageSource = File.ReadAllText(htmlFilepath);
-            testHtmlDocument.LoadHtml(pageSource);
-            return testHtmlDocument;
-        }
-
-
-        [Fact(DisplayName =
-            "BiznesradarPopularityService.FetchBiznesradarPopularity() should fetch correct amount of items")]
-        public void BiznesradarPopularityService_FetchBiznesradarPopularity_should_fetch_correct_amount_of_items()
-        {
-            const int numberOfItemsInHtml = 200;
-            _fetchedPopularity.Items.Should()
-                              .HaveCount(numberOfItemsInHtml, "that's the amount of companies listed in a test html file");
+            _fetchedPopularity.Items.Should().StartWith(ExpectedPopularityItems);
         }
     }
 }

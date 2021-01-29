@@ -1,3 +1,5 @@
+using System;
+
 namespace Core.Model
 {
     public readonly struct BiznesradarPopularityItem : IPopularityItem
@@ -15,6 +17,6 @@ namespace Core.Model
         }
 
 
-        public override string ToString() => $"StockName: {StockName}, Rank: {Rank}";
+        public override string ToString() => $"StockName: {StockName}, Rank: {Rank}, Type: {Type}";
     }
 }

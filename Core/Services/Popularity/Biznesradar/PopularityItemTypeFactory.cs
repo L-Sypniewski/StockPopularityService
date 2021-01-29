@@ -30,7 +30,14 @@ namespace Core.Services.Popularity
                 return PopularityItemType.Commodity;
             }
 
-            return null;
+            if (!name.IsSingleWord())
+            {
+                return null;
+            }
+
+            return name.Length == 3 && ( name.ToLower() != "wig" && name.ToLower() != "dax" )
+                ? PopularityItemType.Stock
+                : PopularityItemType.Index;
         }
     }
 }
