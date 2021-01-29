@@ -35,6 +35,7 @@ namespace AzureFunctions
             builder.Services.AddSingleton<IAggregatePopularityService, AggregatePopularityService>();
             builder.Services.AddSingleton<IPopularityEntityFactory, PopularityEntityFactory>();
             builder.Services.AddSingleton<ISourceFactory, SourceFactory>();
+            builder.Services.AddSingleton<IBiznesradarPopularityStockNameFactory, BiznesradarPopularityStockNameFactory>();
         }
     }
 }
