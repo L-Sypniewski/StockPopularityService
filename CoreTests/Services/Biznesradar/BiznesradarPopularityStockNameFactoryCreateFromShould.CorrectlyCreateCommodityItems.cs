@@ -7,7 +7,6 @@ using Xunit;
 
 namespace CoreTests.Services.Biznesradar
 {
-    [Collection("BiznesradarPopularityService.FetchBiznesradarPopularity()")]
     public class BiznesradarPopularityStockNameFactoryCreateFromShouldCorrectlyCreateCommodityItems
     {
         private readonly BiznesradarPopularityStockNameFactory _sut;
