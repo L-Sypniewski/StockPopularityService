@@ -2,14 +2,14 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Net.Http;
-using HtmlAgilityPack;
-using Moq;
 using Core.Model;
 using Core.Services.Popularity;
 using Core.Utils;
+using HtmlAgilityPack;
+using Moq;
 using Xunit;
 
-namespace CoreTests.Services
+namespace CoreTests.Services.Biznesradar
 {
     [CollectionDefinition("BiznesradarPopularityService.FetchBiznesradarPopularity()")]
     public class BiznesradarPopularityServiceFetchBiznesradarPopularityCollection : ICollectionFixture<
