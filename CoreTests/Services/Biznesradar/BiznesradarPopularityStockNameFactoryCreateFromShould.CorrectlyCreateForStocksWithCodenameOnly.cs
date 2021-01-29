@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using Core.Model;
 using Core.Services.Popularity;
 using FluentAssertions;
@@ -24,7 +23,7 @@ namespace CoreTests.Services.Biznesradar
 
         [Theory(DisplayName =
             "BiznesradarPopularityStockNameFactory.CreateFrom() should correctly create Stocknames for Stocks with codename only")]
-        [MemberData(nameof(CodenameAndLongNameData))]
+        [MemberData(nameof(CodenameOnlyData))]
         public void
             BiznesradarPopularityStockNameFactory_CreateFrom_should_correctly_create_StockNames_for_Stocks_with_codename_only(
                 string name, StockName expectedStockName)
@@ -35,7 +34,7 @@ namespace CoreTests.Services.Biznesradar
         }
 
 
-        public static IEnumerable<object[]> CodenameAndLongNameData => new List<object[]>
+        public static IEnumerable<object[]> CodenameOnlyData => new List<object[]>
         {
             new object[] {"JSW", new StockName("JSW")},
             new object[] {"IDH", new StockName("IDH")},
