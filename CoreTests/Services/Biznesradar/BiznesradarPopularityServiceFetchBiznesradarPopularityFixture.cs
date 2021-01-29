@@ -39,13 +39,14 @@ namespace CoreTests.Services.Biznesradar
                         .Returns(ExpectedDateTimeOffset);
 
             var stockNameFactory = new Mock<IBiznesradarPopularityStockNameFactory>();
+            var typeFactory = new Mock<IPopularityItemTypeFactory>();
 
             var testHtmlDocument = CreateTestHtmlDocument(_htmlTestFilePath);
             htmlDocumentReader.Setup(mock => mock.HtmlDocumentFrom(It.IsAny<string>()))
                               .Returns(testHtmlDocument);
 
             var sut = new BiznesradarPopularityService(httpClient.Object, dateProvider.Object, htmlDocumentReader.Object,
-                                                       stockNameFactory.Object);
+                                                       stockNameFactory.Object, typeFactory.Object);
             FetchedPopularity = sut.FetchBiznesradarPopularity().Result;
             ExpectedPopularityItems = CreateExpectedPopularityItems();
             ExpectedPopularity = CreateExpectedPopularity();

@@ -3,6 +3,7 @@ using System.Linq;
 using Core.Model;
 using Core.Services.Popularity;
 using FluentAssertions;
+using Moq;
 using Xunit;
 
 namespace CoreTests.Services.Biznesradar
@@ -14,7 +15,10 @@ namespace CoreTests.Services.Biznesradar
 
         public BiznesradarPopularityStockNameFactoryCreateFromShouldCorrectlyCreateCommodityItems()
         {
-            _sut = new BiznesradarPopularityStockNameFactory();
+            var typeFactory = new Mock<IPopularityItemTypeFactory>();
+            typeFactory.Setup(mock => mock.CreateTypeFrom(It.IsAny<string>())).Returns(PopularityItemType.Commodity);
+
+            _sut = new BiznesradarPopularityStockNameFactory(typeFactory.Object);
         }
 
 

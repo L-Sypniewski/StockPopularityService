@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using Core.Model;
-using Core.Utils;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 
@@ -9,11 +8,13 @@ namespace Core.Services.Popularity
 {
     public class BiznesradarPopularityStockNameFactory : IBiznesradarPopularityStockNameFactory
     {
+        private readonly IPopularityItemTypeFactory _popularityItemTypeFactory;
         private readonly ILogger<BiznesradarPopularityStockNameFactory> _logger;
 
 
-        public BiznesradarPopularityStockNameFactory(ILogger<BiznesradarPopularityStockNameFactory>? logger = null)
+        public BiznesradarPopularityStockNameFactory(IPopularityItemTypeFactory popularityItemTypeFactory, ILogger<BiznesradarPopularityStockNameFactory>? logger = null)
         {
+            _popularityItemTypeFactory = popularityItemTypeFactory;
             _logger = logger ?? NullLogger<BiznesradarPopularityStockNameFactory>.Instance;
         }
 
@@ -24,7 +25,7 @@ namespace Core.Services.Popularity
             {
                 _logger.LogInformation("Creating StockName for: {Name}", name);
 
-                var type = TypeFrom(name);
+                var type = _popularityItemTypeFactory.CreateTypeFrom(name);
                 _logger.LogInformation("Created {Type} item type for {Name}", type.ToString(), name);
 
                 Func<string, ILogger, StockName> createNameFunc = type switch
@@ -45,34 +46,6 @@ namespace Core.Services.Popularity
                 throw;
             }
         }
-
-        private static PopularityItemType? TypeFrom(string names)
-        {
-            var stockNameContainsTwoCodeNames = names.EndsWith(")");
-            if (stockNameContainsTwoCodeNames)
-            {
-                var splitString = names.Split("(");
-                var codename = splitString.First();
-                var codenameIsIndexName = codename.StartsWith('^') || codename.Contains('.');
-
-                return codenameIsIndexName ? PopularityItemType.Index : PopularityItemType.Stock;
-            }
-
-            var stockIsCurrencyPair = names.CharOccurrences('/') == 2;
-            if (stockIsCurrencyPair)
-            {
-                return PopularityItemType.Currency;
-            }
-
-            var stockIsCommodity = names.CharOccurrences('-') == 1;
-            if (stockIsCommodity)
-            {
-                return PopularityItemType.Commodity;
-            }
-
-            return null;
-        }
-
         private static StockName CreateForCurrency(string name, ILogger logger)
         {
             logger.LogDebug("CreateForCurrency: {Name}", name);
@@ -110,8 +83,8 @@ namespace Core.Services.Popularity
             logger.LogDebug("CreateForIndex: {Name}", name);
 
             var splitString = name.Split("(");
-            var codenameX = splitString.First();
-            return new StockName(codenameX.TrimStart('^'));
+            var codename = splitString.First();
+            return new StockName(codename.TrimStart('^'));
         }
 
 
