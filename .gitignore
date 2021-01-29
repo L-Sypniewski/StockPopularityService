@@ -4,6 +4,10 @@
 !.vscode/launch.json
 !.vscode/extensions.json
 
+# Azure Functions localsettings file
+local.settings.json
+
+
 # Created by https://www.gitignore.io/api/aspnetcore,visualstudiocode
 
 ### ASPNETCore ###

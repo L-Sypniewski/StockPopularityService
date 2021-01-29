@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockPopularityCore", "StockPopularityCore\StockPopularityCore.csproj", "{E9D410DF-B95D-4E81-B71C-B2403F1F1F85}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{E9D410DF-B95D-4E81-B71C-B2403F1F1F85}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockPopularityFunction", "StockPopularityFunction\StockPopularityFunction.csproj", "{FA75472A-E8E9-4547-9CB9-7723EF47CF1C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureFunctions", "AzureFunctions\AzureFunctions.csproj", "{FA75472A-E8E9-4547-9CB9-7723EF47CF1C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockPopularityCoreTests", "StockPopularityCoreTests\StockPopularityCoreTests.csproj", "{B1A4DD87-96F8-44C3-A961-57829D4C758E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreTests", "CoreTests\CoreTests.csproj", "{B1A4DD87-96F8-44C3-A961-57829D4C758E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
