@@ -13,8 +13,8 @@ namespace Core.Services.Popularity
         IBiznesradarPopularityService
     {
         public BiznesradarPopularityService(HttpClient httpClient, IDateProvider dateProvider,
-                                                 IHtmlDocumentReader htmlDocumentReader,
-                                                 ILogger<BiznesradarPopularityService>? logger = null)
+                                            IHtmlDocumentReader htmlDocumentReader,
+                                            ILogger<BiznesradarPopularityService>? logger = null)
             : base(httpClient, dateProvider, htmlDocumentReader, logger)
         {
         }
@@ -31,21 +31,29 @@ namespace Core.Services.Popularity
             const string tempSeparator = "\t";
             var rowStringWithoutMultipleSpaces = Regex.Replace(rowString, @"\s{2,}", tempSeparator);
             var stringElements = rowStringWithoutMultipleSpaces.Split(tempSeparator)
-                                                               .Where(x => !string.IsNullOrEmpty(x))
+                                                               .Where(row => !string.IsNullOrEmpty(row))
                                                                .ToArray();
 
-            var rank = int.Parse(stringElements.First());
-            var stockName = StockNameFrom(stringElements);
+            var nameElement = NameFromStringElements(stringElements);
+            var itemType = TypeFrom(nameElement);
+            var stockName = StockNameFrom(nameElement, itemType);
 
+
+            var rank = int.Parse(stringElements.First());
             return new BiznesradarPopularityItem(stockName, rank);
         }
 
 
-        private static StockName StockNameFrom(IReadOnlyList<string> rowStringElements)
+        private static string NameFromStringElements(string[] stringElements)
         {
-            const int indexOfElementWithNames = 1;
-            var names = rowStringElements[indexOfElementWithNames];
+            const int indexOfElementWithName = 1;
+            var name = stringElements[indexOfElementWithName];
+            return name;
+        }
 
+
+        private static PopularityItemType? TypeFrom(string names)
+        {
             var stockNameContainsTwoCodeNames = names.EndsWith(")");
             if (stockNameContainsTwoCodeNames)
             {
@@ -53,25 +61,56 @@ namespace Core.Services.Popularity
                 var codename = splitString.First();
                 var codenameIsIndexName = codename.StartsWith('^') || codename.Contains('.');
 
-                var longName = codenameIsIndexName ? null : splitString.Last().TrimEnd(')');
-                return new StockName(codename.TrimStart('^'), longName);
+                return codenameIsIndexName ? PopularityItemType.Index : PopularityItemType.Stock;
             }
 
             var stockIsCurrencyPair = names.CharOccurrences('/') == 2;
             if (stockIsCurrencyPair)
+            {
+                return PopularityItemType.Currency;
+            }
+
+            var stockIsCommodity = names.CharOccurrences('-') == 1;
+            if (stockIsCommodity)
+            {
+                return PopularityItemType.Commodity;
+            }
+
+            return null;
+        }
+
+
+        private static StockName StockNameFrom(string names, PopularityItemType? type)
+        {
+
+            if (type == PopularityItemType.Currency)
             {
                 var codename = names.Substring(0, 7);
                 var longName = names.Substring(7);
                 return new StockName(codename, longName);
             }
 
-            var stockIsCommodity = names.CharOccurrences('-') == 1;
-            if (stockIsCommodity)
+            if (type == PopularityItemType.Commodity)
             {
                 var splitNames = names.Split('-');
                 var longName = splitNames.First();
                 var codename = string.Join(' ', splitNames.Skip(1));
                 return new StockName(codename, longName);
+            }
+
+
+            var splitStringX = names.Split("(");
+            var codenameX = splitStringX.First();
+            if (type == PopularityItemType.Index)
+            {
+
+                return new StockName(codenameX.TrimStart('^'));
+            }
+
+            if (type == PopularityItemType.Stock)
+            {
+                var longName = splitStringX.Last().TrimEnd(')');
+                return new StockName(codenameX.TrimStart('^'),longName);
             }
 
             return new StockName(names);

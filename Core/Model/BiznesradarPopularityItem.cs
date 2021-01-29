@@ -4,12 +4,14 @@ namespace Core.Model
     {
         public StockName StockName { get; }
         public int Rank { get; }
+        public PopularityItemType? Type { get; }
 
 
-        public BiznesradarPopularityItem(StockName stockName, int rank)
+        public BiznesradarPopularityItem(StockName stockName, int rank, PopularityItemType? type = null)
         {
             StockName = stockName;
             Rank = rank;
+            Type = type;
         }
 
 
