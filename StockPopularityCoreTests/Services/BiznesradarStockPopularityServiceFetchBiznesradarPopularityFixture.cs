@@ -7,11 +7,18 @@ using Moq;
 using StockPopularityCore.Model;
 using StockPopularityCore.Services.StocksPopularityService;
 using StockPopularityCore.Utils;
+using Xunit;
 
 namespace StockPopularityCoreTests.Services
 {
+    [CollectionDefinition("BiznesradarStockPopularityService.FetchBiznesradarPopularity()")]
+    public class BiznesradarStockPopularityServiceFetchStockBiznesradarPopularityCollection : ICollectionFixture<
+        BiznesradarStockPopularityServiceFetchBiznesradarPopularityFixture>
+    {
+    }
+
     [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
-    public class BiznesradarStockPopularityServiceFetchStockPopularityFixture : IDisposable
+    public class BiznesradarStockPopularityServiceFetchBiznesradarPopularityFixture : IDisposable
     {
         public StockPopularity<StockPopularityItem> FetchedStockPopularity { get; }
         public StockPopularityItem[] ExpectedPopularityItems { get; }
@@ -22,7 +29,7 @@ namespace StockPopularityCoreTests.Services
         private readonly string _htmlTestFilePath = Path.Combine("TestFiles", "BiznesradarRanking.html");
 
 
-        public BiznesradarStockPopularityServiceFetchStockPopularityFixture()
+        public BiznesradarStockPopularityServiceFetchBiznesradarPopularityFixture()
         {
             var httpClient = new Mock<HttpClient>();
             var htmlDocumentReader = new Mock<IHtmlDocumentReader>();
