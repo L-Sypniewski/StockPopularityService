@@ -15,7 +15,7 @@ namespace CoreTests.Services.Biznesradar
         public BiznesradarPopularityStockNameFactoryCreateFromShouldCorrectlyCreateForStocksWithCodenameAndLongName()
         {
             var typeFactory = new Mock<IPopularityItemTypeFactory>();
-            typeFactory.Setup(mock => mock.CreateTypeFrom(It.IsAny<string>())).Returns(PopularityItemType.Stock);
+            typeFactory.Setup(mock => mock.CreateTypeFrom(It.IsAny<string>())).Returns(PopularityItemType.Other);
 
             _sut = new BiznesradarPopularityStockNameFactory(typeFactory.Object);
         }

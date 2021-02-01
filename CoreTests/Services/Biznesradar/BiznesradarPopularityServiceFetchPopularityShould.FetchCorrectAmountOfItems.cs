@@ -32,10 +32,9 @@ namespace CoreTests.Services.Biznesradar
 
             var dateProvider = new Mock<IDateProvider>();
 
-            var typeFactory = new Mock<IPopularityItemTypeFactory>();
             var stockNameFactory = new Mock<IBiznesradarPopularityStockNameFactory>();
             var sut = new BiznesradarPopularityService(httpClient.Object, dateProvider.Object, htmlDocumentReader.Object,
-                                                       stockNameFactory.Object, typeFactory.Object);
+                                                       stockNameFactory.Object);
             _fetchedPopularity = sut.FetchBiznesradarPopularity().Result;
         }
 

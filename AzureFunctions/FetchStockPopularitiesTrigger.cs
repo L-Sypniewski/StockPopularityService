@@ -45,16 +45,16 @@ namespace AzureFunctions
         }
 
 
-        [FunctionName("CheckStockPopularitiesTrigger")]
+        [FunctionName("FetchStockPopularitiesTrigger")]
         public async Task RunAsync([TimerTrigger("%TimerExpression%")] TimerInfo myTimer, ILogger log)
         {
-            log.LogInformation("CheckStockPopularitiesTrigger start");
+            log.LogInformation("FetchStockPopularitiesTrigger start");
 
-            log.LogDebug("Setting static StockPopularityDbOptions");
 
 
             Uri collectionUri =
                 UriFactory.CreateDocumentCollectionUri(CosmosDbOptions!.DatabaseName, CosmosDbOptions.CollectionName);
+            log.LogInformation("Created document collection Uri");
 
             var popularityEntities = _aggregatePopularityService.FetchPopularityRankings()
                                                                           .Select(item => _popularityEntityFactory

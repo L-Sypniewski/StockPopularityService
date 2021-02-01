@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 
 namespace AzureFunctions.Model
 {
@@ -17,7 +18,7 @@ namespace AzureFunctions.Model
         {
             _dateTimeOffset = dateTimeOffset;
             MonthCreated = _dateTimeOffset.ToString("MM-yyyy");
-            dateTime = _dateTimeOffset.ToString();
+            dateTime = _dateTimeOffset.ToString(new CultureInfo("en-gb"));
             this.source = source;
         }
     }

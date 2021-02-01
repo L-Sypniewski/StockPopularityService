@@ -32,8 +32,8 @@ namespace Core.Services.Popularity
                 Func<string, ILogger, StockName> createNameFunc = type switch
                 {
                     PopularityItemType.Commodity => CreateForCommodity,
-                    PopularityItemType.Index => CreateForIndex,
-                    PopularityItemType.Stock => CreateForStock,
+                    PopularityItemType.ForeignIndex => CreateForForeignIndex,
+                    PopularityItemType.Other => CreateForOther,
                     PopularityItemType.Currency => CreateForCurrency,
                     null => CreateForUnknownType,
                     _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
@@ -51,8 +51,9 @@ namespace Core.Services.Popularity
         {
             logger.LogDebug("CreateForCurrency: {Name}", name);
 
-            var codename = name.Substring(0, 7);
-            var longName = name.Substring(7);
+            const int codenameLength = 7;
+            var codename = name.Substring(0, codenameLength);
+            var longName = name.Substring(codenameLength);
             return new StockName(codename, longName);
         }
 
@@ -68,9 +69,9 @@ namespace Core.Services.Popularity
         }
 
 
-        private static StockName CreateForStock(string name, ILogger logger)
+        private static StockName CreateForOther(string name, ILogger logger)
         {
-            logger.LogDebug("CreateForStock: {Name}", name);
+            logger.LogDebug("CreateForOther: {Name}", name);
 
             if (name.IsSingleWord())
             {
@@ -78,15 +79,15 @@ namespace Core.Services.Popularity
             }
 
             var splitString = name.Split("(");
-            var codename = splitString.First();
+            var codename = splitString.First().Trim();
             var longName = splitString.Last().TrimEnd(')');
-            return new StockName(codename.TrimStart('^'), longName);
+            return new StockName(codename, longName);
         }
 
 
-        private static StockName CreateForIndex(string name, ILogger logger)
+        private static StockName CreateForForeignIndex(string name, ILogger logger)
         {
-            logger.LogDebug("CreateForIndex: {Name}", name);
+            logger.LogDebug("CreateForForeignIndex: {Name}", name);
 
             var splitString = name.Split("(");
             var codename = splitString.First();

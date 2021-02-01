@@ -47,7 +47,7 @@ namespace CoreTests.IntegrationTests
             var typeFactory = new PopularityItemTypeFactory();
             var stockNameFactory = new BiznesradarPopularityStockNameFactory(typeFactory);
             var sut = new BiznesradarPopularityService(httpClient.Object, dateProvider.Object, htmlDocumentReader.Object,
-                                                       stockNameFactory, typeFactory);
+                                                       stockNameFactory);
             _fetchedPopularity = sut.FetchBiznesradarPopularity().Result;
         }
 

@@ -3,8 +3,8 @@ namespace Core.Model
     public enum PopularityItemType
     {
         Commodity,
-        Index,
-        Stock,
+        ForeignIndex,
+        Other,
         Currency
     }
 }

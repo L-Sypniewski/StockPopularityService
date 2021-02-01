@@ -8,6 +8,11 @@ namespace Core.Services.Popularity
     {
         public PopularityItemType? CreateTypeFrom(string name)
         {
+            if (name.IsSingleWord())
+            {
+                return null;
+            }
+
             var stockNameContainsTwoCodename = name.EndsWith(")");
             if (stockNameContainsTwoCodename)
             {
@@ -15,7 +20,7 @@ namespace Core.Services.Popularity
                 var codename = splitString.First();
                 var codenameIsIndexName = codename.StartsWith('^') || codename.Contains('.');
 
-                return codenameIsIndexName ? PopularityItemType.Index : PopularityItemType.Stock;
+                return codenameIsIndexName ? PopularityItemType.ForeignIndex : PopularityItemType.Other;
             }
 
             var stockIsCurrencyPair = name.CharOccurrences('/') == 2;
@@ -35,9 +40,7 @@ namespace Core.Services.Popularity
                 return null;
             }
 
-            return name.Length == 3 && ( name.ToLower() != "wig" && name.ToLower() != "dax" )
-                ? PopularityItemType.Stock
-                : PopularityItemType.Index;
+            return PopularityItemType.Other;
         }
     }
 }

@@ -12,18 +12,15 @@ namespace Core.Services.Popularity
         IBiznesradarPopularityService
     {
         private readonly IBiznesradarPopularityStockNameFactory _stockNameFactory;
-        private readonly IPopularityItemTypeFactory _popularityItemTypeFactory;
 
 
         public BiznesradarPopularityService(HttpClient httpClient, IDateProvider dateProvider,
                                             IHtmlDocumentReader htmlDocumentReader,
                                             IBiznesradarPopularityStockNameFactory stockNameFactory,
-                                            IPopularityItemTypeFactory popularityItemTypeFactory,
                                             ILogger<BiznesradarPopularityService>? logger = null)
             : base(httpClient, dateProvider, htmlDocumentReader, logger)
         {
             _stockNameFactory = stockNameFactory;
-            _popularityItemTypeFactory = popularityItemTypeFactory;
         }
 
 
@@ -43,11 +40,9 @@ namespace Core.Services.Popularity
 
             var nameElement = NameFromStringElements(stringElements);
             var stockName = _stockNameFactory.CreateFrom(nameElement);
-            var type = _popularityItemTypeFactory.CreateTypeFrom(nameElement);
-
 
             var rank = int.Parse(stringElements.First());
-            return new BiznesradarPopularityItem(stockName, rank, type);
+            return new BiznesradarPopularityItem(stockName, rank);
         }
 
 

@@ -6,17 +6,14 @@ namespace Core.Model
     {
         public StockName StockName { get; }
         public int Rank { get; }
-        public PopularityItemType? Type { get; }
 
-
-        public BiznesradarPopularityItem(StockName stockName, int rank, PopularityItemType? type = null)
+        public BiznesradarPopularityItem(StockName stockName, int rank)
         {
             StockName = stockName;
             Rank = rank;
-            Type = type;
         }
 
 
-        public override string ToString() => $"StockName: {StockName}, Rank: {Rank}, Type: {Type}";
+        public override string ToString() => $"StockName: {StockName}, Rank: {Rank}";
     }
 }
