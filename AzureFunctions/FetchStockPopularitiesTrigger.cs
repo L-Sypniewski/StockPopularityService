@@ -8,6 +8,11 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Core.Services.Popularity;
+using Core.Utils.Logging;
+using Serilog;
+using Serilog.Context;
+using Serilog.Core;
+using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 namespace AzureFunctions
 {
@@ -22,6 +27,7 @@ namespace AzureFunctions
 
         private readonly IAggregatePopularityService _aggregatePopularityService;
         private readonly IPopularityEntityFactory _popularityEntityFactory;
+        private readonly ICorrelationIdProvider _correlationIdProvider;
 
 
         private static DocumentClient InitializeDocumentClient()
@@ -37,19 +43,20 @@ namespace AzureFunctions
 
         public CheckStockPopularitiesTrigger(IAggregatePopularityService aggregatePopularityService,
                                              IPopularityEntityFactory popularityEntityFactory,
+                                             ICorrelationIdProvider correlationIdProvider,
                                              IOptions<StockPopularityDbOptions> options)
         {
             CosmosDbOptions = options.Value;
             _aggregatePopularityService = aggregatePopularityService;
             _popularityEntityFactory = popularityEntityFactory;
+            _correlationIdProvider = correlationIdProvider;
         }
 
 
         [FunctionName("FetchStockPopularitiesTrigger")]
         public async Task RunAsync([TimerTrigger("%TimerExpression%")] TimerInfo myTimer, ILogger log)
         {
-            log.LogInformation("FetchStockPopularitiesTrigger start");
-
+          log.LogInformation("FetchStockPopularitiesTrigger start");
 
 
             Uri collectionUri =
@@ -57,11 +64,12 @@ namespace AzureFunctions
             log.LogInformation("Created document collection Uri");
 
             var popularityEntities = _aggregatePopularityService.FetchPopularityRankings()
-                                                                          .Select(item => _popularityEntityFactory
-                                                                                      .CreateEntities(item));
+                                                                .Select(item => _popularityEntityFactory
+                                                                            .CreateEntities(item));
             await foreach (var entity in popularityEntities)
             {
-                await DocumentClient.UpsertDocumentAsync(collectionUri, entity);
+                log.LogInformation(entity.ToString());
+                // await DocumentClient.UpsertDocumentAsync(collectionUri, entity);
             }
         }
     }
