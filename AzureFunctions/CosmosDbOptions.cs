@@ -4,9 +4,9 @@ using System.Diagnostics.CodeAnalysis;
 namespace AzureFunctions
 {
     [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
-    public class StockPopularityDbOptions
+    public class CosmosDbOptions
     {
-        public const string ConfigName = "StockPopularityCosmosDbOptions";
+        public const string ConfigName = "CosmosDbOptions";
 
         public string DatabaseName { get; set; }
         public string CollectionName { get; set; }

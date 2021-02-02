@@ -23,7 +23,7 @@ namespace AzureFunctions
 
         private static DocumentClient DocumentClient => _lazyClient.Value;
 
-        private static StockPopularityDbOptions? CosmosDbOptions { get; set; }
+        private static CosmosDbOptions? CosmosDbOptions { get; set; }
 
         private readonly IAggregatePopularityService _aggregatePopularityService;
         private readonly IPopularityEntityFactory _popularityEntityFactory;
@@ -44,7 +44,8 @@ namespace AzureFunctions
         public CheckStockPopularitiesTrigger(IAggregatePopularityService aggregatePopularityService,
                                              IPopularityEntityFactory popularityEntityFactory,
                                              ICorrelationIdProvider correlationIdProvider,
-                                             IOptions<StockPopularityDbOptions> options)
+                                             IOptions<AzureLogAnalyticsOptions> logOptions,
+                                             IOptions<CosmosDbOptions> options)
         {
             CosmosDbOptions = options.Value;
             _aggregatePopularityService = aggregatePopularityService;

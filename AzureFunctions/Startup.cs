@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using AzureFunctions.Services;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
@@ -16,6 +17,8 @@ namespace AzureFunctions
 {
     public class Startup : FunctionsStartup
     {
+
+
         public override void Configure(IFunctionsHostBuilder builder)
         {
             RegisterServices(builder);
@@ -24,12 +27,22 @@ namespace AzureFunctions
 
             builder
                 .Services
-                .AddOptions<StockPopularityDbOptions>()
-                .Configure<IConfiguration>((messageResponderSettings, configuration) =>
+                .AddOptions<CosmosDbOptions>()
+                .Configure<IConfiguration>((options, configuration) =>
                 {
                     configuration
-                        .GetSection(StockPopularityDbOptions.ConfigName)
-                        .Bind(messageResponderSettings);
+                        .GetSection(CosmosDbOptions.ConfigName)
+                        .Bind(options);
+                });
+
+            builder
+                .Services
+                .AddOptions<AzureLogAnalyticsOptions>()
+                .Configure<IConfiguration>((options, configuration) =>
+                {
+                    configuration
+                        .GetSection(AzureLogAnalyticsOptions.ConfigName)
+                        .Bind(options);
                 });
 
             Log.Logger = new LoggerConfiguration()
@@ -63,6 +76,18 @@ namespace AzureFunctions
             builder.Services.AddSingleton<IBiznesradarPopularityStockNameFactory, BiznesradarPopularityStockNameFactory>();
             builder.Services.AddSingleton<IPopularityItemTypeFactory, PopularityItemTypeFactory>();
             builder.Services.AddTransient<ICorrelationIdProvider, CorrelationIdProvider>();
+        }
+
+
+        public override void ConfigureAppConfiguration(IFunctionsConfigurationBuilder builder)
+        {
+            FunctionsHostBuilderContext context = builder.GetContext();
+            var ctxName = context.EnvironmentName;
+
+            builder.ConfigurationBuilder
+                   .AddJsonFile(Path.Combine(context.ApplicationRootPath, "appsettings.json"), optional: true, reloadOnChange: false)
+                   .AddJsonFile(Path.Combine(context.ApplicationRootPath, $"appsettings.{context.EnvironmentName}.json"), optional: true, reloadOnChange: false)
+                   .AddEnvironmentVariables();
         }
     }
 }
