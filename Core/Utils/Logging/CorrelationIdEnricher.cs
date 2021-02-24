@@ -3,7 +3,6 @@ using Serilog.Enrichers.CorrelationId.Accessors;
 #else
 using Microsoft.AspNetCore.Http;
 #endif
-using System;
 using Serilog.Core;
 using Serilog.Events;
 

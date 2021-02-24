@@ -1,5 +1,3 @@
-using System;
-
 namespace Core.Model
 {
     public readonly struct BiznesradarPopularityItem : IPopularityItem
