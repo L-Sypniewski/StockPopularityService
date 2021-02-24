@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using AzureFunctions.Services;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
@@ -9,7 +8,6 @@ using Core.Utils;
 using AzureFunctions;
 using Core.Utils.Logging;
 using Serilog;
-using Serilog.Events;
 
 [assembly: FunctionsStartup(typeof(Startup))]
 
@@ -17,8 +15,6 @@ namespace AzureFunctions
 {
     public class Startup : FunctionsStartup
     {
-
-
         public override void Configure(IFunctionsHostBuilder builder)
         {
             RegisterServices(builder);
@@ -46,6 +42,9 @@ namespace AzureFunctions
                         .Bind(options);
                 });
 
+            var azureLogAnalyticsOptions = new AzureLogAnalyticsOptions();
+            builderContext.Configuration.GetSection(AzureLogAnalyticsOptions.ConfigName).Bind(azureLogAnalyticsOptions);
+
             Log.Logger = new LoggerConfiguration()
                          .Enrich.WithCorrelationId()
                          .Enrich.FromLogContext()
@@ -54,9 +53,11 @@ namespace AzureFunctions
                          .WriteTo.Console(
                              outputTemplate:
                              "[{Timestamp:HH:mm:ss} {CorrelationId} {Level:u3}] {Message:lj}{NewLine}{Exception}")
-                         .WriteTo.AzureAnalytics("11f03e2b-a198-424f-a4f4-ffda56672e9d",
-                                                 "/2zMJccaOJUsbbTNHi5mCD/vE9q6Qt9KSKLlThBKxAr4P4LVItOEkp0/zsocd974MvqOU0UxpaG5hf4QlacYuA==",
-                                                 "Stock data toolset", LogEventLevel.Debug, true, batchSize: 1)
+                         .WriteTo.AzureAnalytics(azureLogAnalyticsOptions.WorkspaceId,
+                                                 azureLogAnalyticsOptions.AuthenticationId,
+                                                 azureLogAnalyticsOptions.LogName, azureLogAnalyticsOptions.Level,
+                                                 azureLogAnalyticsOptions.StoreTimeStampInUtc,
+                                                 batchSize: azureLogAnalyticsOptions.BatchSize)
                          .CreateLogger();
             builder.Services.AddLogging(c => c.AddSerilog(Log.Logger));
         }
@@ -83,11 +84,13 @@ namespace AzureFunctions
         public override void ConfigureAppConfiguration(IFunctionsConfigurationBuilder builder)
         {
             FunctionsHostBuilderContext context = builder.GetContext();
-            var ctxName = context.EnvironmentName;
+            var environmentName = context.EnvironmentName;
 
             builder.ConfigurationBuilder
-                   .AddJsonFile(Path.Combine(context.ApplicationRootPath, "appsettings.json"), optional: true, reloadOnChange: false)
-                   .AddJsonFile(Path.Combine(context.ApplicationRootPath, $"appsettings.{context.EnvironmentName}.json"), optional: true, reloadOnChange: false)
+                   .AddJsonFile(Path.Combine(context.ApplicationRootPath, "appsettings.json"), optional: true,
+                                reloadOnChange: false)
+                   .AddJsonFile(Path.Combine(context.ApplicationRootPath, $"appsettings.{environmentName}.json"),
+                                optional: true, reloadOnChange: false)
                    .AddEnvironmentVariables();
         }
     }
