@@ -23,7 +23,8 @@ namespace AzureFunctions
         {
             RegisterServices(builder);
 
-            var environment = Environment.GetEnvironmentVariable("AZURE_FUNCTIONS_ENVIRONMENT");
+            var builderContext = builder.GetContext()!;
+            var environment = builderContext.EnvironmentName;
 
             builder
                 .Services
