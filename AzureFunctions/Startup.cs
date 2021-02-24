@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Core.Services.Popularity;
 using Core.Utils;
 using AzureFunctions;
+using AzureFunctions.Options;
 using Core.Utils.Logging;
 using Serilog;
 
@@ -29,21 +30,12 @@ namespace AzureFunctions
                 {
                     configuration
                         .GetSection(CosmosDbOptions.ConfigName)
-                        .Bind(options);
-                });
-
-            builder
-                .Services
-                .AddOptions<AzureLogAnalyticsOptions>()
-                .Configure<IConfiguration>((options, configuration) =>
-                {
-                    configuration
-                        .GetSection(AzureLogAnalyticsOptions.ConfigName)
-                        .Bind(options);
+                        .Bind(options, x => x.BindNonPublicProperties = true);
                 });
 
             var azureLogAnalyticsOptions = new AzureLogAnalyticsOptions();
-            builderContext.Configuration.GetSection(AzureLogAnalyticsOptions.ConfigName).Bind(azureLogAnalyticsOptions);
+            builderContext.Configuration.GetSection(AzureLogAnalyticsOptions.ConfigName)
+                          .Bind(azureLogAnalyticsOptions, x => x.BindNonPublicProperties = true);
 
             Log.Logger = new LoggerConfiguration()
                          .Enrich.WithCorrelationId()
