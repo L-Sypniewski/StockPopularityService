@@ -9,9 +9,6 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Core.Services.Popularity;
 using Core.Utils.Logging;
-using Serilog;
-using Serilog.Context;
-using Serilog.Core;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 namespace AzureFunctions
@@ -44,7 +41,6 @@ namespace AzureFunctions
         public CheckStockPopularitiesTrigger(IAggregatePopularityService aggregatePopularityService,
                                              IPopularityEntityFactory popularityEntityFactory,
                                              ICorrelationIdProvider correlationIdProvider,
-                                             IOptions<AzureLogAnalyticsOptions> logOptions,
                                              IOptions<CosmosDbOptions> options)
         {
             CosmosDbOptions = options.Value;
@@ -69,8 +65,8 @@ namespace AzureFunctions
                                                                             .CreateEntities(item));
             await foreach (var entity in popularityEntities)
             {
-                log.LogInformation(entity.ToString());
-                // await DocumentClient.UpsertDocumentAsync(collectionUri, entity);
+                log.LogDebug("Saving entity to database: {Entity}", entity);
+                await DocumentClient.UpsertDocumentAsync(collectionUri, entity);
             }
         }
     }
